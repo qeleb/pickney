@@ -10,6 +10,8 @@ import { store } from '../store';
 import { history } from '../store/history';
 import { Redirect } from 'react-router';
 
+import styles from '../../../public/stylesheet.css'
+
 const RouteGuard = Component => ({ match }) =>
     !store.getState().session.authenticated ?
         <Redirect to="/" />
@@ -19,7 +21,7 @@ const RouteGuard = Component => ({ match }) =>
 export const Main = () => (
     <Router history={history}>
         <Provider store={store}>
-            <div className="container mt-3">
+            <div className="container">
                 <ConnectedNavigation />
                 <Route exact path="/" component={ConnectedLogin} />
                 <Route exact path="/signup" component={ConnectedSignup} />

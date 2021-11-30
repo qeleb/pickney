@@ -10,13 +10,13 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import * as mutations from '../store/mutations';
 
 const Navigation = ({ id, authenticated }) => (
-    <div className="header">
-        <nav className="navbar navbar-light bg-light">
+    <div className="header masthead">
+        <nav className="navbar nav-masthead pt-4">
             <div className="container-fluid">
-                <Link to="/dashboard" className="h1 text-decoration-none">pickney</Link>
+                <Link to="/dashboard" className="h1 masthead-brand">pickney</Link>
                 {authenticated ?
                     <>
-                        <Link to="/browse" className="h3 text-decoration-none">browse</Link>
+                        <Link to="/browse" className="h3">browse</Link>
                         <span style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Link to="/cart" className="h2 m-0 me-5"><i className="bi bi-cart-fill"></i></Link>
 
@@ -27,22 +27,22 @@ const Navigation = ({ id, authenticated }) => (
                                 </button>
                                 <ul className="dropdown-menu p-2" aria-labelledby="user-dropdown">
                                     <li>
-                                        <i className="bi bi-person-fill me-3"></i>
+                                        <i className="bi bi-person-fill me-3 primary"></i>
                                         <ConnectedUsernameDisplay id={id} />
                                     </li>
                                     <li>
-                                        <Link to="/" className="text-decoration-none">
-                                        <i className="bi bi-person-plus me-3"></i>change user
+                                        <Link to="/">
+                                            <i className="bi bi-person-plus me-3"></i>change user
                                         </Link>
                                     </li>
                                     <li><hr className="dropdown-divider"></hr></li>
                                     <li>
-                                        <Link to="/favorites" className="h4 text-decoration-none">
+                                        <Link to="/favorites" className="h4">
                                             <i className="bi bi-star me-3"></i>favorites
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link to="/history" className="h4 text-decoration-none">
+                                        <Link to="/history" className="h4">
                                             <i className="bi bi-clock-history me-3"></i>history
                                         </Link>
                                     </li>

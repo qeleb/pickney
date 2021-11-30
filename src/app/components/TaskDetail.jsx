@@ -46,7 +46,7 @@ const TaskDetail = ({
                     <div>
                         <div>
                             You are the owner of this task.
-                            <button className="btn btn-primary ml-2" onClick={() => setTaskCompletion(id, !isComplete)}>
+                            <button className="btn btn-secondary ml-2" onClick={() => setTaskCompletion(id, !isComplete)}>
                                 {isComplete ? `Reopen` : `Complete`} This Task
                             </button>
                         </div>
@@ -79,7 +79,7 @@ const TaskDetail = ({
 
             <form className="form-inline" onSubmit={(e) => addTaskComment(id, sessionID, e)}>
                 <input type="text" name="commentContents" autoComplete="off" placeholder="Add a comment" className="form-control" />
-                <button type="submit" className="btn btn-light">Submit</button>
+                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
 
             <div>

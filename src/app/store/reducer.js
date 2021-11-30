@@ -66,7 +66,7 @@ export const reducer = combineReducers({
             case mutations.CREATE_TASK:
                 return [...tasks, {
                     id: action.taskID,
-                    name: "New Task",
+                    name: "new item",
                     group: action.groupID,
                     owner: action.ownerID,
                     isComplete: false

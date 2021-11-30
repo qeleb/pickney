@@ -8,7 +8,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>sign up</h2>
-                <Link to="/" className='h3 text-decoration-none'>
+                <Link to="/" className='h3'>
                     login<i className="bi bi-person"></i>
                 </Link>
             </div>

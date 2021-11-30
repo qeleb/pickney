@@ -12,7 +12,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>log in</h2>
-                <Link to="signup" className='h3 text-decoration-none'>
+                <Link to="signup" className='h3'>
                     sign up<i className="bi bi-person-plus ms-2"></i>
                 </Link>
             </div>

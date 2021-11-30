@@ -18,7 +18,7 @@ export function* taskCreationSaga() {
                 group: groupID,
                 owner: ownerID,
                 isComplete: false,
-                name: "New task"
+                name: "new item"
             }
         });
         yield put(mutation);

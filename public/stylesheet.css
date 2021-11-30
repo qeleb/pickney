@@ -1,0 +1,92 @@
+/*
+ * Global CSS
+ */
+
+/* Variables */
+.primary {
+  color: #3ac9a2;
+}
+
+.bg-primary {
+  background-color: #3ac9a2;
+}
+
+.secondary {
+  color: #EAC435;
+}
+
+.bg-secondary {
+  background-color: #EAC435;
+}
+
+/* Base structure */
+html,
+body {
+  height: 100%;
+  background-color: #1e1e1e;
+}
+
+body {
+  color: #FFF;
+  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+/* Header */
+.masthead {
+  margin-bottom: 2rem;
+  min-width: 40rem;
+}
+
+.masthead-brand {
+  margin-bottom: 0;
+  color: #3ac9a2;
+}
+
+/* Links */
+span, a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+a:focus,
+a:hover {
+  color: #3ac9a2;
+}
+
+/* Primary Button */
+.btn-primary,
+.btn-primary:focus {
+  color: #3ac9a2;
+  background-color: #FFF;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  border: .05rem solid #3ac9a2;
+}
+
+.btn-primary:hover {
+  color: #FFF;
+  background-color: #3ac9a2;
+}
+
+/* Secondary Button */
+.btn-secondary,
+.btn-secondary:focus {
+  color: #A68611;
+  background-color: #F9EEC8;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  border: .05rem solid #DEB317;
+}
+
+.btn-secondary:hover {
+  color: #FFF;
+  background-color: #EAC435;
+}
+
+/* Card */
+.card {
+  background-color: #171717;
+}
+
+.dropdown-menu {
+  background-color: #171717;
+}
