@@ -13,7 +13,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>log in</h2>
                 <Link to="signup" className='h3 text-decoration-none'>
-                    sign up<i class="bi bi-person-plus ms-2"></i>
+                    sign up<i className="bi bi-person-plus ms-2"></i>
                 </Link>
             </div>
             <form onSubmit={authenticateUser}>

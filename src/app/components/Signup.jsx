@@ -9,7 +9,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h2>sign up</h2>
                 <Link to="/" className='h3 text-decoration-none'>
-                    login<i class="bi bi-person"></i>
+                    login<i className="bi bi-person"></i>
                 </Link>
             </div>
             <form onSubmit={requestCreateUserAccount}>

@@ -32,7 +32,7 @@ const Navigation = ({ id, authenticated }) => (
                                     </li>
                                     <li>
                                         <Link to="/" className="text-decoration-none">
-                                        <i class="bi bi-person-plus me-3"></i>change user
+                                        <i className="bi bi-person-plus me-3"></i>change user
                                         </Link>
                                     </li>
                                     <li><hr className="dropdown-divider"></hr></li>
