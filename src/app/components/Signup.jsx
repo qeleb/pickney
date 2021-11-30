@@ -1,24 +1,32 @@
 import React from 'react';
 import * as mutations from '../store/mutations';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-const SignupComponent = ({ requestCreateUserAccount, authenticated }) => {
-    return <div className="card p-3 col-6">
-        <h2>sign up</h2>
-        <form onSubmit={requestCreateUserAccount}>
-            <span>username</span>
-            <input type="text" placeholder="username" name="username" className="form-control mt-1" />
-            <span>password</span>
-            <input type="password" placeholder="password" name="password" className="form-control mt-1 mb-4" />
-            <span>confirm password</span>
-            <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1" />
+const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
+    <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
+        <div className="card p-3 col-6">
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <h2>sign up</h2>
+                <Link to="/" className='h3 text-decoration-none'>
+                    login<i class="bi bi-person"></i>
+                </Link>
+            </div>
+            <form onSubmit={requestCreateUserAccount}>
+                <span>username</span>
+                <input type="text" placeholder="username" name="username" className="form-control mt-1" />
+                <span>password</span>
+                <input type="password" placeholder="password" name="password" className="form-control mt-1 mb-4" />
+                <span>confirm password</span>
+                <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1" />
 
-            {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
-            {/*true ? <p>the passwords do not match</p> : null*/}
-            <button type="submit" className="form-control mt-2 btn btn-primary">sign up</button>
-        </form>
+                {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
+                {/*TODO: true ? <p>the passwords do not match</p> : null*/}
+                <button type="submit" className="form-control mt-2 btn btn-primary">sign up</button>
+            </form>
+        </div>
     </div>
-};
+);
 
 const mapStateToProps = state => ({
     authenticated: state.session.authenticated

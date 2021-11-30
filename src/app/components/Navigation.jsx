@@ -26,17 +26,26 @@ const Navigation = ({ id, authenticated }) => (
                                     <i className="bi bi-person-fill"></i>
                                 </button>
                                 <ul className="dropdown-menu p-2" aria-labelledby="user-dropdown">
-                                    <li><Link to="/" className="h3 text-decoration-none">
-                                        <i className="bi bi-person me-3"></i>
+                                    <li>
+                                        <i className="bi bi-person-fill me-3"></i>
                                         <ConnectedUsernameDisplay id={id} />
-                                    </Link></li>
+                                    </li>
+                                    <li>
+                                        <Link to="/" className="text-decoration-none">
+                                        <i class="bi bi-person-plus me-3"></i>change user
+                                        </Link>
+                                    </li>
                                     <li><hr className="dropdown-divider"></hr></li>
-                                    <li><Link to="/favorites" className="h4 text-decoration-none">
-                                        <i className="bi bi-star me-3"></i>favorites
-                                    </Link></li>
-                                    <li><Link to="/history" className="h4 text-decoration-none">
-                                        <i className="bi bi-clock-history me-3"></i>history
-                                    </Link></li>
+                                    <li>
+                                        <Link to="/favorites" className="h4 text-decoration-none">
+                                            <i className="bi bi-star me-3"></i>favorites
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/history" className="h4 text-decoration-none">
+                                            <i className="bi bi-clock-history me-3"></i>history
+                                        </Link>
+                                    </li>
                                 </ul>
                             </div>
                         </span>
