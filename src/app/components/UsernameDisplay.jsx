@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 export const UsernameDisplay = ({ name }) => (
-    <span>{name}</span>
+    <span>{name.length > 10 ? name.slice(0, 10) + '...' : name}</span>
 );
 
 const mapStateToProps = (state, ownProps) => {

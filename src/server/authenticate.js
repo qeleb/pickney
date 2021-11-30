@@ -75,7 +75,7 @@ export const authenticationRoute = app => {
         await db.collection(`groups`).insertOne({
             id: groupID,
             owner: userID,
-            name: `To Do`
+            name: `favorites`
         });
 
         let state = await assembleUserState({ id: userID, name: username });
