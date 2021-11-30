@@ -1,5 +1,5 @@
 import { take, put, select } from 'redux-saga/effects';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
 import { history } from './history'

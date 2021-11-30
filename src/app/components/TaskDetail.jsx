@@ -3,7 +3,7 @@
  * The component automatically calls the REST API [via a mutation] to update the server on every change.
  */
 import React from 'react';
-import uuid from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
