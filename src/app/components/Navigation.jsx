@@ -11,8 +11,8 @@ import * as mutations from '../store/mutations';
 
 const Navigation = ({ id, authenticated }) => (
     <div className="header">
-        <nav class="navbar navbar-light bg-light">
-            <div class="container-fluid">
+        <nav className="navbar navbar-light bg-light">
+            <div className="container-fluid">
                 <Link to="/dashboard" className="h1 text-decoration-none">pickney</Link>
                 {authenticated ?
                     <>
@@ -21,24 +21,28 @@ const Navigation = ({ id, authenticated }) => (
                             <Link to="/cart" className="h2 m-0 me-5"><i className="bi bi-cart-fill"></i></Link>
 
                             {/* User Button & Dropdown */}
-                            <div class="dropstart">
-                                <button class="btn btn-primary" type="button" id="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className="dropstart">
+                                <button className="btn btn-primary" type="button" id="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i className="bi bi-person-fill"></i>
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                    <li><Link to="/" className="h2 text-decoration-none">
-                                        <i className="bi bi-person-fill"></i>
+                                <ul className="dropdown-menu p-2" aria-labelledby="user-dropdown">
+                                    <li><Link to="/" className="h3 text-decoration-none">
+                                        <i className="bi bi-person me-3"></i>
                                         <ConnectedUsernameDisplay id={id} />
                                     </Link></li>
-                                    <li><hr class="dropdown-divider"></hr></li>
-                                    <li><Link to="/favorites" className="h3 text-decoration-none">favorites</Link></li>
-                                    <li><Link to="/history" className="h3 text-decoration-none">history</Link></li>
+                                    <li><hr className="dropdown-divider"></hr></li>
+                                    <li><Link to="/favorites" className="h4 text-decoration-none">
+                                        <i className="bi bi-star me-3"></i>favorites
+                                    </Link></li>
+                                    <li><Link to="/history" className="h4 text-decoration-none">
+                                        <i className="bi bi-clock-history me-3"></i>history
+                                    </Link></li>
                                 </ul>
                             </div>
                         </span>
                     </>
                     :
-                    <Link to="/" className="h1 m-0"><i class="bi bi-person"></i></Link>
+                    <Link to="/" className="h1 m-0"><i className="bi bi-person"></i></Link>
                 }
             </div>
         </nav>

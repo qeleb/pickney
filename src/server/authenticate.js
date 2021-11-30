@@ -78,6 +78,12 @@ export const authenticationRoute = app => {
             name: `favorites`
         });
 
+        await db.collection(`groups`).insertOne({
+            id: groupID,
+            owner: userID,
+            name: `history`
+        });
+
         let state = await assembleUserState({ id: userID, name: username });
 
         res.status(200).send({ userID, state });
