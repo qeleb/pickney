@@ -70,7 +70,7 @@ const TaskDetail = ({
                 </span>
                 <select onChange={setTaskGroup} className="form-control">
                     {groups.map(group => (
-                        <option key={group.name} value={group.name}>
+                        <option key={group.id} value={group.id}>
                             {group.name}
                         </option>
                     ))}
@@ -84,7 +84,7 @@ const TaskDetail = ({
 
             <div>
                 <Link to="/dashboard">
-                    <button md={{ span: 3, offset: 3 }}className="btn btn-primary mt-2 ">Done</button>
+                    <button className="btn btn-primary mt-2 ">Done</button>
                 </Link>
             </div>
         </div>
