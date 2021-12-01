@@ -6,7 +6,7 @@ let defaultState = {
     comments: [],
     users: [],
     groups: [],
-    tasks: []
+    items: []
 };
 
 export const reducer = combineReducers({
@@ -26,8 +26,8 @@ export const reducer = combineReducers({
     comments: (comments = defaultState.comments, action) => {
         switch (action.type) {
             case mutations.ADD_TASK_COMMENT:
-                let { type, owner, task, content, id } = action;
-                return [...comments, { owner, task, content, id }];
+                let { type, owner, item, content, id } = action;
+                return [...comments, { owner, item, content, id }];
             case mutations.SET_STATE:
                 return action.state.comments;
         }
@@ -47,31 +47,31 @@ export const reducer = combineReducers({
         }
         return groups;
     },
-    tasks(tasks = defaultState.tasks, action) {
+    items(items = defaultState.items, action) {
         switch (action.type) {
             case mutations.SET_STATE:
-                return action.state.tasks;
+                return action.state.items;
             case mutations.SET_TASK_COMPLETE:
-                return tasks.map(task => {
-                    return (task.id === action.taskID) ? { ...task, isComplete: action.isComplete } : task;
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, isComplete: action.isComplete } : item;
                 });
             case mutations.SET_TASK_GROUP:
-                return tasks.map(task => {
-                    return (task.id === action.taskID) ? { ...task, group: action.groupID } : task;
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
                 });
             case mutations.SET_TASK_NAME:
-                return tasks.map(task => {
-                    return (task.id === action.taskID) ? { ...task, name: action.name } : task;
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, name: action.name } : item;
                 });
             case mutations.CREATE_TASK:
-                return [...tasks, {
-                    id: action.taskID,
+                return [...items, {
+                    id: action.itemID,
                     name: "new item",
                     group: action.groupID,
                     owner: action.ownerID,
                     isComplete: false
                 }]
         }
-        return tasks;
+        return items;
     }
 });

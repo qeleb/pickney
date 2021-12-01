@@ -1,16 +1,16 @@
 /**
- * The dashboard is a simple React component that contains several lists of tasks,
+ * The dashboard is a simple React component that contains several lists of items,
  * one for each group that belongs to the user.
  */
 
 import { connect } from 'react-redux';
 import React from 'react';
-import { ConnectedTaskList } from './TaskList';
+import { ConnectedItemList } from './ItemList';
 
 const Dashboard = ({ groups }) => (
     <div className="row">
         {groups.map(group => (
-            <ConnectedTaskList key={group.id} {...group} className="col" />
+            <ConnectedItemList key={group.id} {...group} className="col" />
         ))}
     </div>
 );
