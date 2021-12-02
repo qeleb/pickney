@@ -28,11 +28,11 @@ app.post('/item/new', async (req, res) => {
 });
 
 app.post('/item/update', async (req, res) => {
-    let { id, group, isComplete, name } = req.body.item;
+    let { id, group, isHidden, name } = req.body.item;
     let collection_items = (await connectDB()).collection(`items`);
     if (group) await collection_items.updateOne({ id }, { $set: { group } });
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
-    if (isComplete !== undefined) await collection_items.updateOne({ id }, { $set: { isComplete } });
+    if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     res.status(200).send();
 });
 

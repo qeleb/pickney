@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-export const ItemListItem = ({ id, name, commentCount, isComplete }) => (
+export const ItemListItem = ({ id, name, commentCount, isHidden }) => (
     <Link to={`/item/${id}`}>
         <div className="card p-2 mt-2">
             <span>
-                {name} ({commentCount}) {isComplete ? `✓` : null}
+                {name} ({commentCount}) {isHidden ? `✓` : null}
             </span>
         </div>
     </Link>

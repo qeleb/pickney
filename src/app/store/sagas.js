@@ -17,7 +17,7 @@ export function* itemCreationSaga() {
                 id: itemID,
                 group: groupID,
                 owner: ownerID,
-                isComplete: false,
+                isHidden: false,
                 name: "new item"
             }
         });
@@ -40,7 +40,7 @@ export function* itemModificationSaga() {
                 id: item.itemID,
                 group: item.groupID,
                 name: item.name,
-                isComplete: item.isComplete
+                isHidden: item.isHidden
             }
         });
     }

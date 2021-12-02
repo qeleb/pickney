@@ -53,7 +53,7 @@ export const reducer = combineReducers({
                 return action.state.items;
             case mutations.SET_TASK_COMPLETE:
                 return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, isComplete: action.isComplete } : item;
+                    return (item.id === action.itemID) ? { ...item, isHidden: action.isHidden } : item;
                 });
             case mutations.SET_TASK_GROUP:
                 return items.map(item => {
@@ -69,7 +69,7 @@ export const reducer = combineReducers({
                     name: "new item",
                     group: action.groupID,
                     owner: action.ownerID,
-                    isComplete: false
+                    isHidden: false
                 }]
         }
         return items;
