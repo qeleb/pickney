@@ -13,41 +13,41 @@ export const SET_STATE = `SET_STATE`;
 export const USERNAME_RESERVED = `USERNAME_RESERVED`;
 export const REQUEST_USER_ACCOUNT_CREATION = `REQUEST_USER_ACCOUNT_CREATION`;
 
-export const setTaskCompletion = (id, isComplete = true)=>({
+export const setItemHidden = (id, isHidden = true)=>({
     type:SET_TASK_COMPLETE,
-    taskID:id,
-    isComplete
+    itemID:id,
+    isHidden
 });
 
-export const addTaskComment = (commentID, taskID, ownerID, content)=>({
+export const addItemComment = (commentID, itemID, ownerID, content)=>({
     type:ADD_TASK_COMMENT,
     id:commentID,
-    task: taskID,
+    item: itemID,
     owner: ownerID,
     content
 });
 
-export const requestTaskCreation = (groupID)=>({
+export const requestItemCreation = (groupID)=>({
     type:REQUEST_TASK_CREATION,
     groupID
 });
 
-export const createTask = (taskID, groupID, ownerID)=>({
+export const createItem = (itemID, groupID, ownerID)=>({
     type:CREATE_TASK,
-    taskID,
+    itemID,
     groupID,
     ownerID
 });
 
-export const setTaskGroup = (taskID, groupID)=>({
+export const setItemGroup = (itemID, groupID)=>({
     type:SET_TASK_GROUP,
-    taskID,
+    itemID,
     groupID
 });
 
-export const setTaskName = (taskID, name)=>({
+export const setItemName = (itemID, name)=>({
     type:SET_TASK_NAME,
-    taskID,
+    itemID,
     name
 });
 

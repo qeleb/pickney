@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { ConnectedTaskDetail } from './TaskDetail'
+import { ConnectedItemDetail } from './ItemDetail'
 import { ConnectedDashboard } from './Dashboard'
 import { ConnectedNavigation } from './Navigation'
 import { ConnectedLogin } from './Login'
@@ -30,8 +30,8 @@ export const Main = () => (
                     render={RouteGuard(ConnectedDashboard)} />
 
                 <Route exact
-                    path="/task/:id"
-                    render={RouteGuard(ConnectedTaskDetail)} />
+                    path="/item/:id"
+                    render={RouteGuard(ConnectedItemDetail)} />
             </div>
         </Provider>
     </Router>

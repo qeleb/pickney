@@ -22,17 +22,17 @@ if (process.env.NODE_ENV == `production`) {
     });
 }
 
-app.post('/task/new', async (req, res) => {
-    await (await connectDB()).collection(`tasks`).insertOne(req.body.task);
+app.post('/item/new', async (req, res) => {
+    await (await connectDB()).collection(`items`).insertOne(req.body.item);
     res.status(200).send();
 });
 
-app.post('/task/update', async (req, res) => {
-    let { id, group, isComplete, name } = req.body.task;
-    let collection_tasks = (await connectDB()).collection(`tasks`);
-    if (group) await collection_tasks.updateOne({ id }, { $set: { group } });
-    if (name) await collection_tasks.updateOne({ id }, { $set: { name } });
-    if (isComplete !== undefined) await collection_tasks.updateOne({ id }, { $set: { isComplete } });
+app.post('/item/update', async (req, res) => {
+    let { id, group, isComplete, name } = req.body.item;
+    let collection_items = (await connectDB()).collection(`items`);
+    if (group) await collection_items.updateOne({ id }, { $set: { group } });
+    if (name) await collection_items.updateOne({ id }, { $set: { name } });
+    if (isComplete !== undefined) await collection_items.updateOne({ id }, { $set: { isComplete } });
     res.status(200).send();
 });
 

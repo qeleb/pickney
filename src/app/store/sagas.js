@@ -6,15 +6,15 @@ import { history } from './history'
 import * as mutations from './mutations';
 const url = process.env.NODE_ENV === 'production' ? `` : `http://localhost:7777`;
 
-export function* taskCreationSaga() {
+export function* itemCreationSaga() {
     while (true) {
         const { groupID } = yield take(mutations.REQUEST_TASK_CREATION);
         const ownerID = yield select(state => state.session.id);
-        const taskID = uuid();
-        let mutation = mutations.createTask(taskID, groupID, ownerID);
-        const { res } = yield axios.post(url + `/task/new`, {
-            task: {
-                id: taskID,
+        const itemID = uuid();
+        let mutation = mutations.createItem(itemID, groupID, ownerID);
+        const { res } = yield axios.post(url + `/item/new`, {
+            item: {
+                id: itemID,
                 group: groupID,
                 owner: ownerID,
                 isComplete: false,
@@ -32,15 +32,15 @@ export function* commentCreationSaga() {
     }
 }
 
-export function* taskModificationSaga() {
+export function* itemModificationSaga() {
     while (true) {
-        const task = yield take([mutations.SET_TASK_GROUP, mutations.SET_TASK_NAME, mutations.SET_TASK_COMPLETE]);
-        axios.post(url + `/task/update`, {
-            task: {
-                id: task.taskID,
-                group: task.groupID,
-                name: task.name,
-                isComplete: task.isComplete
+        const item = yield take([mutations.SET_TASK_GROUP, mutations.SET_TASK_NAME, mutations.SET_TASK_COMPLETE]);
+        axios.post(url + `/item/update`, {
+            item: {
+                id: item.itemID,
+                group: item.groupID,
+                name: item.name,
+                isComplete: item.isComplete
             }
         });
     }
