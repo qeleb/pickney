@@ -47,7 +47,7 @@ const ItemDetail = ({
                         <div>
                             You are the owner of this item.
                             <button className="btn btn-secondary ml-2" onClick={() => setItemHidden(id, !isHidden)}>
-                                {isHidden ? `Visable` : `Hide`} This Item
+                                {isHidden ? `Show` : `Hide`} This Item
                             </button>
                         </div>
                     </div>
