@@ -2,7 +2,7 @@
  * Global CSS
  */
 
-/* Variables */
+/* Color Variables */
 .primary {
   color: #3ac9a2;
 }
@@ -17,6 +17,13 @@
 
 .bg-secondary {
   background-color: #EAC435;
+}
+
+/* Helpful Layout Variables */
+.center {
+  display:'flex';
+  text-align: center;
+  justify-content: 'center';
 }
 
 /* Base structure */
@@ -41,6 +48,18 @@ body {
 .masthead-brand {
   margin-bottom: 0;
   color: #3ac9a2;
+}
+
+/* Category */
+.category {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+/* Item Grid */
+.item-grid {
+  background-color: rgba(0, 0, 0, 0);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
 }
 
 /* Links */
@@ -89,4 +108,8 @@ a:hover {
 
 .dropdown-menu {
   background-color: #171717;
+}
+
+.list-group-item {
+  background-color: #3dcca5;
 }

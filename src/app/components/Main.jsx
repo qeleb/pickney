@@ -10,7 +10,7 @@ import { store } from '../store';
 import { history } from '../store/history';
 import { Redirect } from 'react-router';
 
-import styles from '../../../public/stylesheet.css'
+import styles from '../../../public/stylesheet.css';
 
 const RouteGuard = Component => ({ match }) =>
     !store.getState().session.authenticated ?
