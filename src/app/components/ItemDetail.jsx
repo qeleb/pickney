@@ -62,11 +62,9 @@ const ItemDetail = ({
                 <button type="submit" className="btn btn-primary">post</button>
             </form>
 
-            <div>
-                <Link to="/dashboard">
-                    <button className="btn btn-primary mt-2 ">save changes</button>
-                </Link>
-            </div>
+            <Link to="/dashboard">
+                <button className="btn btn-primary mt-2 ">back</button>
+            </Link>
         </div>
     )
 }
