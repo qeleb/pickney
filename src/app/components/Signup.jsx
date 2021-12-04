@@ -8,17 +8,15 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h1>sign up</h1>
-                <Link to="/" className='h4'>
-                    login<i className="bi bi-person ms-2"></i>
-                </Link>
+                <Link to="/" className='h4'>login<i className="bi bi-person ms-2"></i></Link>
             </div>
             <form onSubmit={requestCreateUserAccount}>
                 <span>username</span>
-                <input type="text" placeholder="username" name="username" className="form-control mt-1" />
+                <input type="text" placeholder="username" name="username" className="form-control mt-1 mb-1" />
                 <span>password</span>
                 <input type="password" placeholder="password" name="password" className="form-control mt-1 mb-4" />
                 <span>confirm password</span>
-                <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1" />
+                <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1  mb-4" />
 
                 {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
                 {/*TODO: Show Password Validation Text <p>{passwordValid}</p> */}
