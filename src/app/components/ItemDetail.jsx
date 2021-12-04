@@ -19,7 +19,7 @@ const ItemDetail = ({
     id,
     comments,
     item,
-    isOwner, // Check if owner to show edit form
+    isOwner, //TODO: Check if owner to show edit form
     isHidden,
     sessionID,
     groups,
@@ -34,7 +34,7 @@ const ItemDetail = ({
             <div className="input-group">
                 <p className="me-4">title</p>
                 <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
-                <button className="btn btn-secondary ml-2" onClick={() => setItemHidden(id, !isHidden)}>{isHidden ? `Show` : `Hide`} This Item</button>
+                <button className="btn btn-secondary ml-2" onClick={() => setItemHidden(id, !isHidden)}>{isHidden ? `show` : `hide`} this item</button>
             </div>
 
             <form className="input-group pt-3 pb-0">
@@ -68,6 +68,10 @@ const ItemDetail = ({
         </div>
     )
 }
+
+const filterBySize = (file) => {
+    return file.size <= 5242880; // Filter out images bigger than 5MB
+  };
 
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.id;
