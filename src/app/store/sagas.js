@@ -8,7 +8,7 @@ const url = process.env.NODE_ENV === 'production' ? `` : `http://localhost:7777`
 
 export function* itemCreationSaga() {
     while (true) {
-        const { groupID } = yield take(mutations.REQUEST_TASK_CREATION);
+        const { groupID } = yield take(mutations.REQUEST_ITEM_CREATE);
         const ownerID = yield select(state => state.session.id);
         const itemID = uuid();
         let mutation = mutations.createItem(itemID, groupID, ownerID);
@@ -27,14 +27,14 @@ export function* itemCreationSaga() {
 
 export function* commentCreationSaga() {
     while (true) {
-        const comment = yield take(mutations.ADD_TASK_COMMENT);
+        const comment = yield take(mutations.ADD_ITEM_COMMENT);
         axios.post(url + `/comment/new`, { comment })
     }
 }
 
 export function* itemModificationSaga() {
     while (true) {
-        const item = yield take([mutations.SET_TASK_GROUP, mutations.SET_TASK_NAME, mutations.SET_TASK_COMPLETE]);
+        const item = yield take([mutations.SET_ITEM_GROUP, mutations.SET_ITEM_NAME, mutations.SET_ITEM_HIDDEN]);
         axios.post(url + `/item/update`, {
             item: {
                 id: item.itemID,
@@ -67,7 +67,7 @@ export function* userAuthenticationSaga() {
 
 export function* userAccountCreationSaga() {
     while (true) {
-        const { username, password } = yield take(mutations.REQUEST_USER_ACCOUNT_CREATION);
+        const { username, password } = yield take(mutations.REQUEST_USER_ACCOUNT_CREATE);
         try {
             const { data } = yield axios.post(url + `/user/create`, { username, password });
             console.log(data);

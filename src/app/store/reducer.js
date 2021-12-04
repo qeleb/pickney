@@ -25,7 +25,7 @@ export const reducer = combineReducers({
     },
     comments: (comments = defaultState.comments, action) => {
         switch (action.type) {
-            case mutations.ADD_TASK_COMMENT:
+            case mutations.ADD_ITEM_COMMENT:
                 let { type, owner, item, content, id } = action;
                 return [...comments, { owner, item, content, id }];
             case mutations.SET_STATE:
@@ -51,19 +51,19 @@ export const reducer = combineReducers({
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.items;
-            case mutations.SET_TASK_COMPLETE:
+            case mutations.SET_ITEM_HIDDEN:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, isHidden: action.isHidden } : item;
                 });
-            case mutations.SET_TASK_GROUP:
+            case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
                 });
-            case mutations.SET_TASK_NAME:
+            case mutations.SET_ITEM_NAME:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, name: action.name } : item;
                 });
-            case mutations.CREATE_TASK:
+            case mutations.CREATE_ITEM:
                 return [...items, {
                     id: action.itemID,
                     name: "new item",

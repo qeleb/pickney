@@ -31,20 +31,14 @@ const Navigation = ({ id, authenticated }) => (
                                         <ConnectedUsernameDisplay id={id} />
                                     </li>
                                     <li>
-                                        <Link to="/">
-                                            <i className="bi bi-person-plus me-3"></i>change user
-                                        </Link>
+                                        <Link to="/"><i className="bi bi-person-plus me-3"></i>change user</Link>
                                     </li>
                                     <li><hr className="dropdown-divider"></hr></li>
                                     <li>
-                                        <Link to="/favorites" className="h4">
-                                            <i className="bi bi-star me-3"></i>favorites
-                                        </Link>
+                                        <Link to="/favorites" className="h4"><i className="bi bi-star me-3"></i>favorites</Link>
                                     </li>
                                     <li>
-                                        <Link to="/history" className="h4">
-                                            <i className="bi bi-clock-history me-3"></i>history
-                                        </Link>
+                                        <Link to="/history" className="h4"><i className="bi bi-clock-history me-3"></i>history</Link>
                                     </li>
                                 </ul>
                             </div>
