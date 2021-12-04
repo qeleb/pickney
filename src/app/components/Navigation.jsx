@@ -13,7 +13,10 @@ const Navigation = ({ id, authenticated }) => (
     <div className="header masthead">
         <nav className="navbar nav-masthead pt-4">
             <div className="container-fluid">
-                <Link to="/dashboard" className="h1 masthead-brand">pickney</Link>
+                <Link to="/dashboard" className="h1 masthead-brand">
+                    <img className="logo" alt="pickney logo" src="public/logo.png" />
+                    pickney
+                </Link>
                 {authenticated ?
                     <>
                         <Link to="/browse" className="h3">browse</Link>
