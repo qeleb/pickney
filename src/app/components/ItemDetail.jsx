@@ -52,7 +52,7 @@ const ItemDetail = ({
             <div className="mt-3">
                 <p className="m-0 mb-1">comments</p>
                 <div className="list-group p-3 pt-0">
-                    {comments.map(comment => <li class="list-group-item" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} /> : {comment.content}</li>)}
+                    {comments.map(comment => <li className="list-group-item" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} /> : {comment.content}</li>)}
                 </div>
             </div>
 
