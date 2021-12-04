@@ -1,7 +1,3 @@
-/**
- * The item detail component route is a more sophisticated form that has many different fields.
- * The component automatically calls the REST API [via a mutation] to update the server on every change.
- */
 import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
@@ -16,6 +12,7 @@ import {
     addItemComment
 } from '../store/mutations'
 
+/* Automatically calls the REST API [via a mutation] to update the server on every change. */
 const ItemDetail = ({
     id,
     comments,

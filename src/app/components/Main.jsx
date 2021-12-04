@@ -10,6 +10,7 @@ import { store } from '../store';
 import { history } from '../store/history';
 import { Redirect } from 'react-router';
 
+// Get Global Styles
 import styles from '../../../public/stylesheet.css';
 
 const RouteGuard = Component => ({ match }) =>
@@ -25,13 +26,8 @@ export const Main = () => (
                 <ConnectedNavigation />
                 <Route exact path="/" component={ConnectedLogin} />
                 <Route exact path="/signup" component={ConnectedSignup} />
-                <Route exact
-                    path="/dashboard"
-                    render={RouteGuard(ConnectedDashboard)} />
-
-                <Route exact
-                    path="/item/:id"
-                    render={RouteGuard(ConnectedItemDetail)} />
+                <Route exact path="/dashboard" render={RouteGuard(ConnectedDashboard)} />
+                <Route exact path="/item/:id" render={RouteGuard(ConnectedItemDetail)} />
             </div>
         </Provider>
     </Router>
