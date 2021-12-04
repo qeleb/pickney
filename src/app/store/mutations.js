@@ -13,64 +13,64 @@ export const SET_STATE = `SET_STATE`;
 export const USERNAME_RESERVED = `USERNAME_RESERVED`;
 export const REQUEST_USER_ACCOUNT_CREATION = `REQUEST_USER_ACCOUNT_CREATION`;
 
-export const setItemHidden = (id, isHidden = true)=>({
-    type:SET_TASK_COMPLETE,
-    itemID:id,
+export const setItemHidden = (id, isHidden = true) => ({
+    type: SET_TASK_COMPLETE,
+    itemID: id,
     isHidden
 });
 
-export const addItemComment = (commentID, itemID, ownerID, content)=>({
-    type:ADD_TASK_COMMENT,
-    id:commentID,
+export const addItemComment = (commentID, itemID, ownerID, content) => ({
+    type: ADD_TASK_COMMENT,
+    id: commentID,
     item: itemID,
     owner: ownerID,
     content
 });
 
-export const requestItemCreation = (groupID)=>({
-    type:REQUEST_TASK_CREATION,
+export const requestItemCreation = (groupID) => ({
+    type: REQUEST_TASK_CREATION,
     groupID
 });
 
-export const createItem = (itemID, groupID, ownerID)=>({
-    type:CREATE_TASK,
+export const createItem = (itemID, groupID, ownerID) => ({
+    type: CREATE_TASK,
     itemID,
     groupID,
     ownerID
 });
 
-export const setItemGroup = (itemID, groupID)=>({
-    type:SET_TASK_GROUP,
+export const setItemGroup = (itemID, groupID) => ({
+    type: SET_TASK_GROUP,
     itemID,
     groupID
 });
 
-export const setItemName = (itemID, name)=>({
-    type:SET_TASK_NAME,
+export const setItemName = (itemID, name) => ({
+    type: SET_TASK_NAME,
     itemID,
     name
 });
 
-export const requestAuthenticateUser = (username, password)=>({
-    type:REQUEST_AUTHENTICATE_USER,
+export const requestAuthenticateUser = (username, password) => ({
+    type: REQUEST_AUTHENTICATE_USER,
     username,
     password
 });
 
-export const processAuthenticateUser = (status = AUTHENTICATING, session = null)=>({
+export const processAuthenticateUser = (status = AUTHENTICATING, session = null) => ({
     type: PROCESSING_AUTHENTICATE_USER,
     session,
     authenticated: status
 });
 
-export const setState = (state = {})=>({
-    type:SET_STATE,
+export const setState = (state = {}) => ({
+    type: SET_STATE,
     state
 });
 
 
-export const requestCreateUserAccount = (username,password)=>({
-    type:REQUEST_USER_ACCOUNT_CREATION,
+export const requestCreateUserAccount = (username, password) => ({
+    type: REQUEST_USER_ACCOUNT_CREATION,
     username,
     password
 });

@@ -69,10 +69,6 @@ const ItemDetail = ({
     )
 }
 
-const filterBySize = (file) => {
-    return file.size <= 5242880; // Filter out images bigger than 5MB
-  };
-
 function mapStateToProps(state, ownProps) {
     let id = ownProps.match.params.id;
     let item = state.items.find(item => item.id === id);

@@ -21,7 +21,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
                 <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1" />
 
                 {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
-                {/*TODO: true ? <p>the passwords do not match</p> : null*/}
+                {/*TODO: Show Password Validation Text <p>{passwordValid}</p> */}
                 <button type="submit" className="form-control mt-2 btn btn-primary">sign up</button>
             </form>
         </div>
@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
     authenticated: state.session.authenticated
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     requestCreateUserAccount(e) {
         e.preventDefault();
         const PASSWORD_REQUIREMENTS=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,32}$/;
