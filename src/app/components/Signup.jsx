@@ -35,12 +35,23 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
     requestCreateUserAccount(e) {
         e.preventDefault();
+        const PASSWORD_REQUIREMENTS=  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,32}$/;
         let username = e.target[`username`].value;
         let password = e.target[`password`].value;
         let passwordConfirm = e.target[`password-confirm`].value;
+        if (password.length < 8 || password.length > 32) {
+            // TODO: Show in UI that the password length is not valid
+            console.log(`password must be 8-32 characters long`);
+            return;
+        }
+        if (!password.match(PASSWORD_REQUIREMENTS)) {
+            // TODO: Show in UI that the password needs 1 lower, 1 upper, 1 number, and 1 special character
+            console.log(`password needs 1 lower, 1 upper, 1 number, and 1 special character`);
+            return;
+        }
         if (password !== passwordConfirm) {
             // TODO: Show in UI that the passwords do not match
-            console.log(`the passwords do not match`);
+            console.log(`passwords do not match`);
             return;
         }
         dispatch(mutations.requestCreateUserAccount(username, password, passwordConfirm));
