@@ -9,10 +9,11 @@ import { Link } from 'react-router-dom';
 
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
-    setItemHidden,
-    addItemComment,
+    setItemName,
     setItemGroup,
-    setItemName
+    setItemImg,
+    setItemHidden,
+    addItemComment
 } from '../store/mutations'
 
 const ItemDetail = ({
@@ -24,10 +25,11 @@ const ItemDetail = ({
     sessionID,
     groups,
 
-    setItemHidden,
-    addItemComment,
+    setItemName,
     setItemGroup,
-    setItemName
+    setItemImg,
+    setItemHidden,
+    addItemComment
 }) => {
     return (
         <div className="card p-3 col-6">
@@ -41,13 +43,14 @@ const ItemDetail = ({
                 <span className="me-4">change category</span>
                 <select onChange={setItemGroup} className="form-control">
                     <option key='default' value={null}>keep current category</option>
-                    {groups.map(group => (
-                        <option key={group.id} value={group.id}>{group.name}</option>
-                    ))}
+                    {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
                 </select>
             </form>
 
-            <button className='btn btn-secondary mt-3 mb-5'>upload new item image</button> {/*TODO: Implement Photo Uploads */}
+            <form className="input-group pt-3 pb-0">
+                <p className="m-0 me-3">item image</p>
+                <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
+            </form>
 
             <div className="mt-3">
                 <p className="m-0 mb-1">comments</p>
@@ -62,9 +65,7 @@ const ItemDetail = ({
                 <button type="submit" className="btn btn-primary">post</button>
             </form>
 
-            <Link to="/dashboard">
-                <button className="btn btn-primary mt-2 ">back</button>
-            </Link>
+            <Link to="/dashboard"><button className="btn btn-primary mt-2">back</button></Link>
         </div>
     )
 }
@@ -90,14 +91,17 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch, ownProps) {
     let id = ownProps.match.params.id;
     return {
-        setItemHidden(id, isHidden) {
-            dispatch(setItemHidden(id, isHidden));
+        setItemName(e) {
+            dispatch(setItemName(id, e.target.value));
         },
         setItemGroup(e) {
             dispatch(setItemGroup(id, e.target.value));
         },
-        setItemName(e) {
-            dispatch(setItemName(id, e.target.value));
+        setItemImg(e) {
+            dispatch(setItemImg(id, e.target.value));
+        },
+        setItemHidden(id, isHidden) {
+            dispatch(setItemHidden(id, isHidden));
         },
         addItemComment(itemID, ownerID, e) {
             let input = e.target[`commentContents`];

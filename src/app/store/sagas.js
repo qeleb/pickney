@@ -34,12 +34,13 @@ export function* commentCreationSaga() {
 
 export function* itemModificationSaga() {
     while (true) {
-        const item = yield take([mutations.SET_ITEM_GROUP, mutations.SET_ITEM_NAME, mutations.SET_ITEM_HIDDEN]);
+        const item = yield take([mutations.SET_ITEM_GROUP, mutations.SET_ITEM_NAME, mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN]);
         axios.post(url + `/item/update`, {
             item: {
                 id: item.itemID,
                 group: item.groupID,
                 name: item.name,
+                img: item.img,
                 isHidden: item.isHidden
             }
         });

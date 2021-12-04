@@ -51,17 +51,21 @@ export const reducer = combineReducers({
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.items;
-            case mutations.SET_ITEM_HIDDEN:
+            case mutations.SET_ITEM_NAME:
                 return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, isHidden: action.isHidden } : item;
+                    return (item.id === action.itemID) ? { ...item, name: action.name } : item;
                 });
             case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
                 });
-            case mutations.SET_ITEM_NAME:
+            case mutations.SET_ITEM_IMG:
                 return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, name: action.name } : item;
+                    return (item.id === action.itemID) ? { ...item, img: action.img } : item;
+                });
+            case mutations.SET_ITEM_HIDDEN:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, isHidden: action.isHidden } : item;
                 });
             case mutations.CREATE_ITEM:
                 return [...items, {
