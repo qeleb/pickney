@@ -16,13 +16,12 @@ import {
 
 /* Automatically calls the REST API [via a mutation] to update the server on every change. */
 const ItemDetail = ({
-    id,
-    comments,
-    item,
-    sessionID,
-    groups,
-
-    setItemName,
+    id,                 // ID of Selected Item (For Matching Item Info)
+    comments,           // Comments on the Item
+    item,               // Item
+    sessionID,          // Session ID
+    groups,             // All Available Groups
+    setItemName,        // Functions to Update Item & Add Comments ⬇
     setItemGroup,
     setItemInventory,
     setItemImg,
@@ -32,7 +31,6 @@ const ItemDetail = ({
 }) => {
     return (
         <div className="card p-3 col-6">
-            {console.log('ITEM', item)}
             <div className="input-group">
                 <p className="me-4">title</p>
                 <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
@@ -78,10 +76,9 @@ const ItemDetail = ({
 
 const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id;
-    let item = state.items.find(item => item.id === id);
     return {
         id,
-        item,
+        item: state.items.find(item => item.id === id),
         comments: state.comments.filter(comment => comment.item === id),
         sessionID: state.session.id,
         groups: state.groups
