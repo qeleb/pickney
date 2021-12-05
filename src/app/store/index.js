@@ -65,6 +65,10 @@ const reducer = combineReducers({
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, name: action.name } : item;
                 });
+            case mutations.SET_ITEM_DESC:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, desc: action.desc } : item;
+                });
             case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
@@ -89,6 +93,7 @@ const reducer = combineReducers({
                 return [...items, {
                     id: action.itemID,
                     name: "new item",
+                    desc: "no description",
                     group: action.groupID,
                     inventory: 0,
                     isHidden: false,
@@ -150,6 +155,7 @@ const sagas = [
                 item: {
                     id: itemID,
                     name: "new item",
+                    desc: "no description",
                     group: [groupID],
                     inventory: 0,
                     isHidden: false,
@@ -161,13 +167,14 @@ const sagas = [
     },
     function* itemModificationSaga() {
         while (true) {
-            const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_GROUP, mutations.SET_ITEM_INVENTORY, 
-                mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
+            const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_DESC, mutations.SET_ITEM_GROUP,
+                mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
             axios.post(`${URL}/item/update`, {
                 item: {
                     id: item.itemID,
                     name: item.name,
-                    group: item.groupID,
+                    desc: item.desc,
+                    group: item.groupID, // TODO: Allow for group removal
                     inventory: item.inventory,
                     img: item.img,
                     isHidden: item.isHidden,

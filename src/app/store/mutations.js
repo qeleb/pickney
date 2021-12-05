@@ -2,6 +2,7 @@ export const CREATE_ITEM = 'CREATE_ITEM';
 export const REQUEST_ITEM_CREATE = 'REQUEST_ITEM_CREATE';
 
 export const SET_ITEM_NAME = 'SET_ITEM_NAME';
+export const SET_ITEM_DESC = 'SET_ITEM_DESC';
 export const SET_ITEM_GROUP = 'SET_ITEM_GROUP';
 export const SET_ITEM_INVENTORY = 'SET_ITEM_INVENTORY';
 export const SET_ITEM_IMG = 'SET_ITEM_IMG';
@@ -36,6 +37,12 @@ export const setItemName = (itemID, name) => ({
     type: SET_ITEM_NAME,
     itemID,
     name
+});
+
+export const setItemDesc = (itemID, desc) => ({
+    type: SET_ITEM_DESC,
+    itemID,
+    desc
 });
 
 export const setItemGroup = (itemID, groupID) => ({

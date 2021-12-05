@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
     setItemName,
+    setItemDesc,
     setItemGroup,
     setItemInventory,
     setItemImg,
@@ -22,6 +23,7 @@ const ItemDetail = ({
     groups,             // All Available Groups
     isAdmin,            // True/False, If User is Admin
     setItemName,        // Functions to Update Item & Add Comments ⬇
+    setItemDesc,
     setItemGroup,
     setItemInventory,
     setItemImg,
@@ -30,14 +32,20 @@ const ItemDetail = ({
     addItemComment
 }) => {
     return (
-        <div className="card p-3 col-6">
+        <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
             {isAdmin ?
-                <>
+                <div className="card p-3 col-10">
+                    <h1>product editor</h1>
                     <div className="input-group">
                         <p className="me-4">name</p>
                         <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
                         <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
                         <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
+                    </div>
+
+                    <div className="input-group pt-3 pb-0">
+                        <p className="me-4">description</p>
+                        <textarea type="text" value={item.desc} rows='4' onChange={setItemDesc} className="form-control form-control-lg" />
                     </div>
 
                     <form className="input-group pt-3 pb-0">
@@ -71,10 +79,17 @@ const ItemDetail = ({
                         <button type="submit" className="btn btn-primary">post</button>
                     </form>
 
-                    <Link to="/" className="btn btn-primary mt-2">return to home page</Link>
-                </>
+                    <Link to="/" className="btn btn-primary mt-5">return to home page</Link>
+                </div>
             :
-                <h1>Not an Admin</h1>
+                <div className="card p-3 col-10">
+                    <h1 className="center">{item.name}</h1>
+                    {/* TODO: Load Actual Product Images */}
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
+                    </div>
+                    <h5>{item.desc}</h5>
+                </div>
             }
         </div>
     )
@@ -96,6 +111,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     let id = ownProps.match.params.id;
     return {
         setItemName (e) { dispatch(setItemName(id, e.target.value)); },
+        setItemDesc (e) { dispatch(setItemDesc(id, e.target.value)); },
         setItemGroup(e) { dispatch(setItemGroup(id, e.target.value)); },
         setItemInventory(e) { dispatch(setItemInventory(id, e.target.value)); },
         setItemImg(e) { dispatch(setItemImg(id, e.target.value)); },
