@@ -75,7 +75,7 @@ app.post('/user/create', async (req, res) => {
     let collection = db.collection('users');    // Users Collection in DB
 
     // Check if the Username is Valid
-    if (username.length < 3) {
+    if (username.length < 3 || username.length > 32) {
         res.status(500).send({ message: "username is invalid" });
         return;
     };
@@ -98,7 +98,7 @@ app.post('/user/create', async (req, res) => {
         id: userID,
         name: username,
         passwordHash: md5(password),
-        admin: false
+        isAdmin: false
     });
 
     // Create Groups for the User

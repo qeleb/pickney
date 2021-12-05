@@ -34,8 +34,8 @@ const mapDispatchToProps = dispatch => ({
         let username = e.target['username'].value;
         let password = e.target['password'].value;
         let passwordConfirm = e.target['password-confirm'].value;
-        if (username.length < 3) {
-            document.getElementById('username-tip').innerText = 'username (must be at least 3 characters long)';
+        if (username.length < 3 || username.length > 32) {
+            document.getElementById('username-tip').innerText = 'username (must be 3-32 characters long)';
             document.getElementById('username-tip').style = 'color: red';
             return;
         }
