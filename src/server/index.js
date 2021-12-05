@@ -47,7 +47,7 @@ const assembleUserState = async (user) => {
  * Database Routes
  */
 
-// DB Route: Login User
+// Route: Login User
 app.post('/authenticate', async (req, res) => {
     let { username, password } = req.body;      // The Credentials Submitted
 
@@ -67,7 +67,7 @@ app.post('/authenticate', async (req, res) => {
     res.send({ token, state });
 });
 
-// DB Route: Create New User
+// Route: Create New User
 app.post('/user/create', async (req, res) => {
     let { username, password } = req.body;      // The Credentials Submitted
     let db = await connectDB();                 // Connection to DB
@@ -110,13 +110,13 @@ app.post('/user/create', async (req, res) => {
     res.status(200).send({ userID, state });
 });
 
-// DB Route: Create New Item (ADMIN)
+// Route: Create New Item (ADMIN)
 app.post('/item/new', async (req, res) => {
     await (await connectDB()).collection(`items`).insertOne(req.body.item);
     res.status(200).send();
 });
 
-// DB Route: Update an Item (ADMIN)
+// Route: Update an Item (ADMIN)
 app.post('/item/update', async (req, res) => {
     let { id, name, group, img, isHidden, isDeleted } = req.body.item;
     console.log('GROUP: ', group); //TODO: REMOVE
@@ -131,7 +131,7 @@ app.post('/item/update', async (req, res) => {
     res.status(200).send();
 });
 
-// DB Route: Comment on an Item
+// Route: Comment on an Item
 app.post('/comment/new', async (req, res) => {
     await (await connectDB()).collection(`comments`).insertOne(req.body.comment)
     res.status(200).send();

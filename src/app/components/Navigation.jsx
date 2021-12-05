@@ -7,7 +7,7 @@ import logo from '../../../public/stylesheet.css';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import * as mutations from '../store/mutations';
 
-const Navigation = ({ id, authenticated }) => (
+const Navigation = ({ id, authenticated, logout }) => (
     <div className="header masthead">
         <nav className="navbar nav-masthead pt-4">
             <div className="container-fluid">
@@ -32,7 +32,7 @@ const Navigation = ({ id, authenticated }) => (
                                         <ConnectedUsernameDisplay id={id} />
                                     </li>
                                     <li>
-                                        <Link to="/login"><i className="bi bi-person-plus me-3"></i>change user</Link>
+                                        <Link to="/login" onClick={logout}><i className="bi bi-box-arrow-right me-3"></i>log out</Link>
                                     </li>
                                     <li><hr className="dropdown-divider"></hr></li>
                                     <li>
@@ -53,9 +53,16 @@ const Navigation = ({ id, authenticated }) => (
     </div>
 );
 
-const mapStateToProps = ({ session }) => ({
-    id: session.id,
-    authenticated: session.authenticated == mutations.AUTHENTICATED
+const mapStateToProps = ({ session }) => {
+    console.log('SESSION', session);
+    return {
+        id: session.id,
+        authenticated: session.authenticated == mutations.AUTHENTICATED
+    }
+};
+
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(mutations.requestUserLogout())
 });
 
-export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
+export const ConnectedNavigation = connect(mapStateToProps, mapDispatchToProps)(Navigation);

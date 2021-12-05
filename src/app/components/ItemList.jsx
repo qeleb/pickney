@@ -4,7 +4,7 @@ import { requestItemCreation } from '../store/mutations'
 import { ConnectedItemListItem } from './ItemListItem'
 
 export const ItemList = ({ items, name, createNewItem, id }) => (
-    <div className="category p-2 m-2">
+    <div className="p-2 m-2">
         <div style={{display:'flex', justifyContent:'left'}}>
             <h2>{name}</h2>
             <button className="btn btn-secondary btn-block ms-3" onClick={() => createNewItem(id)}>+</button> {/* TODO: Only Show for Admins */}

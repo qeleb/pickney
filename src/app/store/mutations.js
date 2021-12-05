@@ -11,6 +11,7 @@ export const ADD_ITEM_COMMENT = `ADD_ITEM_COMMENT`;
 export const REQUEST_USER_ACCOUNT_CREATE = `REQUEST_USER_ACCOUNT_CREATE`;
 export const REQUEST_AUTHENTICATE_USER = `REQUEST_AUTHENTICATE_USER`;
 export const PROCESSING_AUTHENTICATE_USER = `PROCESSING_AUTHENTICATE_USER`;
+export const REQUEST_USER_LOGOUT = `REQUEST_USER_LOGOUT`;
 
 export const AUTHENTICATING = `AUTHENTICATING`;
 export const AUTHENTICATED = `AUTHENTICATED`;
@@ -84,6 +85,12 @@ export const processAuthenticateUser = (status = AUTHENTICATING, session = null)
     type: PROCESSING_AUTHENTICATE_USER,
     session,
     authenticated: status
+});
+
+export const requestUserLogout = () => ({
+    type: REQUEST_USER_LOGOUT,
+    session: { authenticated: NOT_AUTHENTICATED, id: '0' },
+    authenticated: NOT_AUTHENTICATED
 });
 
 export const setState = (state = {}) => ({

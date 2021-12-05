@@ -56,11 +56,6 @@ body {
   margin-right: 8px;
 }
 
-/* Category */
-.category {
-  background-color: rgba(0, 0, 0, 0);
-}
-
 /* Item Grid */
 .item-grid {
   background-color: rgba(0, 0, 0, 0);

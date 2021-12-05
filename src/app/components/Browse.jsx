@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { ConnectedItemList } from './ItemList';
 
-const Dashboard = ({ groups }) => (
+const Browse = ({ groups }) => (
     <div className="item-grid">
         {groups.map(group => (
-            <ConnectedItemList key={group.id} {...group} className="col" />
+            <ConnectedItemList key={group.id} {...group} />
         ))}
     </div>
 );
 
 const mapStateToProps = ({ groups }) => ({ groups });
 
-export const ConnectedDashboard = connect(mapStateToProps)(Dashboard);
+export const ConnectedBrowse = connect(mapStateToProps)(Browse);

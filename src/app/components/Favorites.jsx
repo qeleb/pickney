@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { ConnectedItemList } from './ItemList';
 
-const Cart = ({ groups }) => (
+const Favorites = ({ groups }) => (
     <>
-        {groups.filter(group => group.name === 'cart').map(group => (
+        {groups.filter(group => group.name === 'favorites').map(group => (
             <ConnectedItemList key={group.id} {...group} />
         ))}
     </>
@@ -12,4 +12,4 @@ const Cart = ({ groups }) => (
 
 const mapStateToProps = ({ groups }) => ({ groups });
 
-export const ConnectedCart = connect(mapStateToProps)(Cart);
+export const ConnectedFavorites = connect(mapStateToProps)(Favorites);

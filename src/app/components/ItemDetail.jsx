@@ -65,7 +65,7 @@ const ItemDetail = ({
                 <button type="submit" className="btn btn-primary">post</button>
             </form>
 
-            <Link to={"/"}><button className="btn btn-primary mt-2">return to homepage</button></Link>
+            <Link to="/"><button className="btn btn-primary mt-2">return to home page</button></Link>
         </div>
     )
 }
