@@ -16,7 +16,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
                 <span>password</span>
                 <input type="password" placeholder="password" name="password" className="form-control mt-1 mb-4" />
                 {authenticated === mutations.NOT_AUTHENTICATED ? <p>username or password is incorrect</p> : null}
-                <button type="submit" disabled={authenticated === `PROCESSING`} className="form-control mt-2 btn btn-primary">
+                <button type="submit" disabled={authenticated === 'PROCESSING'} className="form-control mt-2 btn btn-primary">
                     log in
                 </button>
             </form>
@@ -29,9 +29,7 @@ const mapStateToProps = ({ session }) => ({ authenticated: session.authenticated
 const mapDispatchToProps = (dispatch) => ({
     authenticateUser(e) {
         e.preventDefault();
-        let username = e.target[`username`].value;
-        let password = e.target[`password`].value;
-        dispatch(mutations.requestAuthenticateUser(username, password));
+        dispatch(mutations.requestAuthenticateUser(e.target['username'].value, e.target['password'].value));
     }
 });
 

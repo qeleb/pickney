@@ -34,8 +34,8 @@ const ItemDetail = ({
             <div className="input-group">
                 <p className="me-4">title</p>
                 <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
-                <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? `show` : `hide`}</button>
-                <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? `undelete` : `delete`}</button>
+                <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
+                <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
             </div>
 
             <form className="input-group pt-3 pb-0">
