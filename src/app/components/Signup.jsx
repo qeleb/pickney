@@ -19,7 +19,6 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
                 <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1  mb-4" />
 
                 {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
-                {/*TODO: Show Password Validation Text <p>{passwordValid}</p> */}
                 <button type="submit" className="form-control mt-2 btn btn-primary">sign up</button>
             </form>
         </div>
@@ -35,6 +34,13 @@ const mapDispatchToProps = dispatch => ({
         let username = e.target['username'].value;
         let password = e.target['password'].value;
         let passwordConfirm = e.target['password-confirm'].value;
+        if (username.length < 3) {
+            document.getElementById('username-tip').innerText = 'username (must be at least 3 characters long)';
+            document.getElementById('username-tip').style = 'color: red';
+            return;
+        }
+        document.getElementById('username-tip').innerText = 'username';
+        document.getElementById('username-tip').style = 'color: white';
         if (password.length < 8 || password.length > 32) {
             document.getElementById('password-tip').innerText = 'password (must be 8-32 characters long)';
             document.getElementById('password-tip').style = 'color: red';
