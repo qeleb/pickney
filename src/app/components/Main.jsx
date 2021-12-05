@@ -1,15 +1,19 @@
 import React from 'react';
 import { Route, Router } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { Provider } from 'react-redux';
-import { ConnectedItemDetail } from './ItemDetail'
-import { ConnectedDashboard } from './Dashboard'
+import { store, history } from '../store';
 import { ConnectedNavigation } from './Navigation'
+import { ConnectedHome } from './Home'
 import { ConnectedLogin } from './Login'
 import { ConnectedSignup } from './Signup'
-import { store } from '../store';
-import { history } from '../store/history';
-import { Redirect } from 'react-router';
+import { ConnectedCart } from './Cart'
+import { ConnectedFavorites } from './Favorites'
+import { ConnectedPurchased } from './Purchased'
+import { ConnectedBrowse } from './Browse'
+import { ConnectedItemDetail } from './ItemDetail'
 
+// Get Global Styles
 import styles from '../../../public/stylesheet.css';
 
 const RouteGuard = Component => ({ match }) =>
@@ -23,15 +27,14 @@ export const Main = () => (
         <Provider store={store}>
             <div className="container">
                 <ConnectedNavigation />
-                <Route exact path="/" component={ConnectedLogin} />
+                <Route exact path="/" component={ConnectedHome} />
+                <Route exact path="/login" component={ConnectedLogin} />
                 <Route exact path="/signup" component={ConnectedSignup} />
-                <Route exact
-                    path="/dashboard"
-                    render={RouteGuard(ConnectedDashboard)} />
-
-                <Route exact
-                    path="/item/:id"
-                    render={RouteGuard(ConnectedItemDetail)} />
+                <Route exact path="/browse" render={RouteGuard(ConnectedBrowse)} />
+                <Route exact path="/cart" render={RouteGuard(ConnectedCart)} />
+                <Route exact path="/favorites" render={RouteGuard(ConnectedFavorites)} />
+                <Route exact path="/purchased" render={RouteGuard(ConnectedPurchased)} />
+                <Route exact path="/item/:id" render={RouteGuard(ConnectedItemDetail)} />
             </div>
         </Provider>
     </Router>

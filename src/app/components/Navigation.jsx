@@ -1,19 +1,19 @@
-/**
- * The navigation component is present on all non-login pages,
- * and contains a link back to the dashboard, and the user's name.
- */
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import React from 'react';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import * as mutations from '../store/mutations';
 
-const Navigation = ({ id, authenticated }) => (
+import logo from '../../../public/stylesheet.css';
+
+const Navigation = ({ id, authenticated, logout }) => (
     <div className="header masthead">
         <nav className="navbar nav-masthead pt-4">
             <div className="container-fluid">
-                <Link to="/dashboard" className="h1 masthead-brand">pickney</Link>
+                <Link to="/" className="h1 masthead-brand">
+                    <img className="logo" alt="pickney logo" src="public/logo.png" />
+                    pickney
+                </Link>
                 {authenticated ?
                     <>
                         <Link to="/browse" className="h3">browse</Link>
@@ -31,27 +31,21 @@ const Navigation = ({ id, authenticated }) => (
                                         <ConnectedUsernameDisplay id={id} />
                                     </li>
                                     <li>
-                                        <Link to="/">
-                                            <i className="bi bi-person-plus me-3"></i>change user
-                                        </Link>
+                                        <Link to="/login" onClick={logout}><i className="bi bi-box-arrow-right me-3"></i>log out</Link>
                                     </li>
                                     <li><hr className="dropdown-divider"></hr></li>
                                     <li>
-                                        <Link to="/favorites" className="h4">
-                                            <i className="bi bi-star me-3"></i>favorites
-                                        </Link>
+                                        <Link to="/favorites" className="h4"><i className="bi bi-star me-3"></i>favorites</Link>
                                     </li>
                                     <li>
-                                        <Link to="/history" className="h4">
-                                            <i className="bi bi-clock-history me-3"></i>history
-                                        </Link>
+                                        <Link to="/purchased" className="h4"><i className="bi bi-clock-history me-3"></i>purchased</Link>
                                     </li>
                                 </ul>
                             </div>
                         </span>
                     </>
                     :
-                    <Link to="/" className="h1 m-0"><i className="bi bi-person"></i></Link>
+                    <Link to="/login" className="h1 m-0"><i className="bi bi-person"></i></Link>
                 }
             </div>
         </nav>
@@ -63,4 +57,8 @@ const mapStateToProps = ({ session }) => ({
     authenticated: session.authenticated == mutations.AUTHENTICATED
 });
 
-export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
+const mapDispatchToProps = (dispatch) => ({
+    logout: () => dispatch(mutations.requestUserLogout())
+});
+
+export const ConnectedNavigation = connect(mapStateToProps, mapDispatchToProps)(Navigation);

@@ -4,11 +4,11 @@
 
 /* Color Variables */
 .primary {
-  color: #3ac9a2;
+  color: #3AC9A2;
 }
 
 .bg-primary {
-  background-color: #3ac9a2;
+  background-color: #3AC9A2;
 }
 
 .secondary {
@@ -17,6 +17,14 @@
 
 .bg-secondary {
   background-color: #EAC435;
+}
+
+.warning {
+  color: #9B1D20;
+}
+
+.bg-warning {
+  background-color: #9B1D20;
 }
 
 /* Helpful Layout Variables */
@@ -30,7 +38,7 @@
 html,
 body {
   height: 100%;
-  background-color: #1e1e1e;
+  background-color: #1E1E1E;
 }
 
 body {
@@ -47,12 +55,13 @@ body {
 
 .masthead-brand {
   margin-bottom: 0;
-  color: #3ac9a2;
+  color: #3AC9A2;
 }
 
-/* Category */
-.category {
-  background-color: rgba(0, 0, 0, 0);
+.logo {
+  width: 35px;
+  height: 35px;
+  margin-right: 8px;
 }
 
 /* Item Grid */
@@ -70,27 +79,28 @@ span, a {
 
 a:focus,
 a:hover {
-  color: #3ac9a2;
+  color: #3AC9A2;
 }
 
 /* Primary Button */
 .btn-primary,
 .btn-primary:focus {
-  color: #3ac9a2;
-  background-color: #FFF;
+  color: #165041;
+  background-color: #CFF2E9;
   text-shadow: none; /* Prevent inheritance from `body` */
-  border: .05rem solid #3ac9a2;
+  border: .05rem solid #3AC9A2;
 }
 
 .btn-primary:hover {
   color: #FFF;
-  background-color: #3ac9a2;
+  background-color: #30BF98;
+  border-color: #FFF;
 }
 
 /* Secondary Button */
 .btn-secondary,
 .btn-secondary:focus {
-  color: #A68611;
+  color: #81680E;
   background-color: #F9EEC8;
   text-shadow: none; /* Prevent inheritance from `body` */
   border: .05rem solid #DEB317;
@@ -99,6 +109,22 @@ a:hover {
 .btn-secondary:hover {
   color: #FFF;
   background-color: #EAC435;
+  border-color: #FFF;
+}
+
+/* Primary Button */
+.btn-warning,
+.btn-warning:focus {
+  color: #9B1D20;
+  background-color: #FFF;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  border: .05rem solid #9B1D20;
+}
+
+.btn-warning:hover {
+  color: #FFF;
+  background-color: #9B1D20;
+  border-color: #FFF;
 }
 
 /* Card */
@@ -106,10 +132,12 @@ a:hover {
   background-color: #171717;
 }
 
+/* Dropdown Menu */
 .dropdown-menu {
   background-color: #171717;
+  min-width: 12rem;
 }
 
 .list-group-item {
-  background-color: #3dcca5;
+  background-color: #3DCCA5;
 }

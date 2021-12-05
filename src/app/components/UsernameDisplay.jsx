@@ -1,12 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export const UsernameDisplay = ({ name }) => (
-    <span>{name.length > 10 ? name.slice(0, 10) + '...' : name}</span>
-);
+export const UsernameDisplay = ({ name, isAdmin }) =>
+    <span>{name.length > 10 ? name.slice(0, 10) + '...' : name}{isAdmin ? ' (admin)' : ''}</span>;
 
-const mapStateToProps = (state, ownProps) => {
-    return state.users.find(user => user.id === ownProps.id)
-};
+const mapStateToProps = (state) => state.user;
 
 export const ConnectedUsernameDisplay = connect(mapStateToProps)(UsernameDisplay);
