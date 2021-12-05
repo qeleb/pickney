@@ -34,14 +34,14 @@ const ItemDetail = ({
             {isAdmin ?
                 <>
                     <div className="input-group">
-                        <p className="me-4">title</p>
+                        <p className="me-4">name</p>
                         <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
                         <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
                         <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
                     </div>
 
                     <form className="input-group pt-3 pb-0">
-                        <span className="me-4">change category</span>
+                        <span className="me-4">category</span>
                         <select onChange={setItemGroup} className="form-control">
                             <option key='default' value={null}>keep current category</option>
                             {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
@@ -54,11 +54,11 @@ const ItemDetail = ({
                     </div>
 
                     <form className="input-group pt-3 pb-0">
-                        <p className="m-0 me-3">item image</p>
+                        <p className="m-0 me-3">image</p>
                         <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
                     </form>
 
-                    <div className="mt-3">
+                    <div className="mt-5">
                         <p className="m-0 mb-1">comments</p>
                         <div className="list-group p-3 pt-0">
                             {comments.map(comment => <li className="list-group-item" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} /> : {comment.content}</li>)}
@@ -71,7 +71,7 @@ const ItemDetail = ({
                         <button type="submit" className="btn btn-primary">post</button>
                     </form>
 
-                    <Link to="/"><button className="btn btn-primary mt-2">return to home page</button></Link>
+                    <Link to="/" className="btn btn-primary mt-2">return to home page</Link>
                 </>
             :
                 <h1>Not an Admin</h1>
