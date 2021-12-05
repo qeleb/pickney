@@ -160,7 +160,8 @@ const sagas = [
                     inventory: 0,
                     isHidden: false,
                     isDeleted: false
-                }
+                },
+                user_id: yield select(state => state.session.id)
             });
             yield put(mutation);
         }
@@ -180,7 +181,8 @@ const sagas = [
                     img: item.img,
                     isHidden: item.isHidden,
                     isDeleted: item.isDeleted
-                }
+                },
+                user_id: yield select(state => state.session.id)
             });
         }
     },

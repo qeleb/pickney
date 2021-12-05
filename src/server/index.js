@@ -34,7 +34,7 @@ const connectDB = async () => {
 
 // Assemble User State
 const assembleUserState = async (user) => {
-    let items = await db.collection('items').find({ isDeleted: false }).toArray();
+    let items = await db.collection('items').find(user.isAdmin? { isDeleted: false } : { isDeleted: false, isHidden: false }).toArray();
     return {
         session: { authenticated: 'AUTHENTICATED', id: user.id },
         user: await db.collection('users').findOne({ id: user.id }),
@@ -126,12 +126,20 @@ app.post('/user/create', async (req, res) => {
 
 // Route: Create New Item (ADMIN)
 app.post('/item/new', async (req, res) => {
+    // Check if User is an Admin
+    if (!(await (await connectDB()).collection('users').findOne({ id: req.body.user_id })).isAdmin)
+        return res.status(500).send({ message: "this function requires admin privileges" });
+
     await (await connectDB()).collection('items').insertOne(req.body.item);
     res.status(200).send();
 });
 
 // Route: Update an Item (ADMIN)
 app.post('/item/update', async (req, res) => {
+    // Check if User is an Admin
+    if (!(await (await connectDB()).collection('users').findOne({ id: req.body.user_id })).isAdmin)
+        return res.status(500).send({ message: "this function requires admin privileges" });
+    
     let { id, name, desc, group, inventory, img, isHidden, isDeleted } = req.body.item;
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
