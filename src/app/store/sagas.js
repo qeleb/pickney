@@ -29,6 +29,7 @@ export function* itemCreationSaga() {
 export function* commentCreationSaga() {
     while (true) {
         const comment = yield take(mutations.ADD_ITEM_COMMENT);
+        if (comment.type) delete comment.type;
         axios.post(`${URL}/comment/new`, { comment })
     }
 }
