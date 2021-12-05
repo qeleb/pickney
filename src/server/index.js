@@ -119,7 +119,6 @@ app.post('/item/new', async (req, res) => {
 // Route: Update an Item (ADMIN)
 app.post('/item/update', async (req, res) => {
     let { id, name, group, img, isHidden, isDeleted } = req.body.item;
-    console.log('GROUP: ', group); //TODO: REMOVE
     let collection_items = (await connectDB()).collection(`items`);
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     //TODO: Allow removing groups

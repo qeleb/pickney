@@ -86,6 +86,6 @@ export function* userAccountCreationSaga() {
 export function* userLogoutSaga() {
     while (true) {
         yield take(mutations.REQUEST_USER_LOGOUT);
-        yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
+        yield put(mutations.processAuthenticateUser(null)); // Indicates No Attempts to Authenticate
     }
 }

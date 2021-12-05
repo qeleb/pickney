@@ -53,13 +53,10 @@ const Navigation = ({ id, authenticated, logout }) => (
     </div>
 );
 
-const mapStateToProps = ({ session }) => {
-    console.log('SESSION', session);
-    return {
-        id: session.id,
-        authenticated: session.authenticated == mutations.AUTHENTICATED
-    }
-};
+const mapStateToProps = ({ session }) => ({
+    id: session.id,
+    authenticated: session.authenticated == mutations.AUTHENTICATED
+});
 
 const mapDispatchToProps = (dispatch) => ({
     logout: () => dispatch(mutations.requestUserLogout())

@@ -88,9 +88,7 @@ export const processAuthenticateUser = (status = AUTHENTICATING, session = null)
 });
 
 export const requestUserLogout = () => ({
-    type: REQUEST_USER_LOGOUT,
-    session: { authenticated: NOT_AUTHENTICATED, id: '0' },
-    authenticated: NOT_AUTHENTICATED
+    type: REQUEST_USER_LOGOUT
 });
 
 export const setState = (state = {}) => ({
