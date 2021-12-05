@@ -48,7 +48,7 @@ const assembleUserState = async (user) => {
         session: { authenticated: 'AUTHENTICATED', id: user.id },
         user: await db.collection('users').findOne({ id: user.id }),
         items,
-        groups: await db.collection('groups').find({ owner: user.id }).toArray(),
+        groups: await db.collection('categories').find({ isHidden: false }).toArray(),
         comments: await db.collection('comments').find({ item: { $in: items.map(item => item.id) } }).toArray()
     };
 }
@@ -107,26 +107,11 @@ app.post('/user/create', async (req, res) => {
         id: userID,
         name: username,
         passwordHash: md5(password),
+        cart: [],
+        favorites: [],
+        purchased: [],
         isAdmin: false
     });
-
-    // Create Groups for the User
-    await db.collection('groups').insertMany([
-    {
-        id: uuid(),
-        owner: userID,
-        name: 'cart'
-    },
-    {
-        id: uuid(),
-        owner: userID,
-        name: 'favorites'
-    },
-    {
-        id: uuid(),
-        owner: userID,
-        name: 'purchased'
-    }]);
 
     // Return Status 200 & State
     let state = await assembleUserState({ id: userID, name: username });
@@ -153,8 +138,10 @@ app.post('/item/update', async (req, res) => {
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
-    //TODO: Allow removing groups
-    if (group) await collection_items.updateOne({ id }, { $addToSet: { group } });
+    if (group) await collection_items.updateOne({ id }, { $set: { group } }); //TODO: Allow multiselecting categories
+    if (cart) await collection_items.updateOne({ id }, { $set: { cart } }); //TODO: Finish Cart
+    if (favorites) await collection_items.updateOne({ id }, { $set: { favorites } }); //TODO: Finish Favorites
+    if (purchased) await collection_items.updateOne({ id }, { $set: { purchased } }); //TODO: Finish Purchased
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
