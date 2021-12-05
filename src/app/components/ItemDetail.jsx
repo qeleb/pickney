@@ -38,7 +38,8 @@ const ItemDetail = ({
                 {isAdmin ?
                     <>
                         <h1>product editor</h1>
-                        <div className="input-group">
+                        <hr />
+                        <div className="input-group mt-3">
                             <p className="me-4">name</p>
                             <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
                             <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
@@ -63,7 +64,7 @@ const ItemDetail = ({
                             <input type="number" value={item.inventory} onChange={setItemInventory} className="form-control form-control" />
                         </div>
 
-                        <form className="input-group pt-3 pb-0">
+                        <form className="input-group pt-3 pb-0 mb-3">
                             <p className="m-0 me-3">image</p>
                             <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
                         </form>
@@ -71,6 +72,7 @@ const ItemDetail = ({
                 :
                     <>
                         <h1 className="center">{item.name}</h1>
+                        <hr />
                         {/* TODO: Load Actual Product Images */}
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                             <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
@@ -78,6 +80,7 @@ const ItemDetail = ({
                         <h5 className="p-5">{item.desc}</h5>
                     </>
                 }
+                <hr />
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                     <button className="btn btn-warning" style={{maxWidth: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
                     {/*TODO: Add Item to Favorites*/}
@@ -89,6 +92,7 @@ const ItemDetail = ({
 
             <div className="card p-3 mt-5">
                 <h1>comments</h1>
+                <hr />
                 <div className="list-group p-3 pt-0" style={{ border: 'none' }}>
                     {comments.map(comment =>
                         <li className="list-group-item ms-5 me-5" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
