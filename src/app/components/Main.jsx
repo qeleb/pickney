@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '../store';
-import { history } from '../store/history';
 import { Redirect } from 'react-router';
+import { Provider } from 'react-redux';
+
+import { store, history } from '../store';
 import { ConnectedNavigation } from './Navigation'
 import { ConnectedHome } from './Home'
 import { ConnectedLogin } from './Login'
