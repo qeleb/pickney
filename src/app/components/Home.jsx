@@ -1,9 +1,8 @@
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import React from 'react';
-
-import { ConnectedUsernameDisplay } from './UsernameDisplay'
+// import { Link } from 'react-router-dom'; //TODO: Uncomment when Home page has links
+import { connect } from 'react-redux';
 import * as mutations from '../store/mutations';
+import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 const Home = ({ id, authenticated }) => (
     <>

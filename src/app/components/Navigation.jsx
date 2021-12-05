@@ -1,11 +1,10 @@
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import React from 'react';
-
-import logo from '../../../public/stylesheet.css';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import * as mutations from '../store/mutations';
+
+import logo from '../../../public/stylesheet.css';
 
 const Navigation = ({ id, authenticated, logout }) => (
     <div className="header masthead">

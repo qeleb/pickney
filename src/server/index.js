@@ -74,8 +74,8 @@ app.post('/user/create', async (req, res) => {
     let db = await connectDB();                 // Connection to DB
     let collection = db.collection('users');    // Users Collection in DB
 
-     // Check if the Username is Valid
-     if (username.length < 3) {
+    // Check if the Username is Valid
+    if (username.length < 3) {
         res.status(500).send({ message: "username is invalid" });
         return;
     };
@@ -95,9 +95,10 @@ app.post('/user/create', async (req, res) => {
     // Create a User ID & Add to DB
     let userID = uuid();
     await collection.insertOne({
-        name: username,
         id: userID,
-        passwordHash: md5(password)
+        name: username,
+        passwordHash: md5(password),
+        admin: false
     });
 
     // Create Groups for the User

@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 export const ItemListItem = ({ id, name, commentCount, isHidden }) => (
     <Link to={`/item/${id}`}>

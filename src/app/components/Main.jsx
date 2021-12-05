@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Router } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { Provider } from 'react-redux';
-
 import { store, history } from '../store';
 import { ConnectedNavigation } from './Navigation'
 import { ConnectedHome } from './Home'

@@ -1,7 +1,7 @@
 import React from 'react';
-import * as mutations from '../store/mutations';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as mutations from '../store/mutations';
 
 const LoginComponent = ({ authenticateUser, authenticated }) => (
     <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>

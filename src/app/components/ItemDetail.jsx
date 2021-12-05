@@ -1,8 +1,7 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { v4 as uuid } from 'uuid';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
     setItemName,
