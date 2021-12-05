@@ -2,11 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-export const ItemListItem = ({ id, name, isAdmin, commentCount, isHidden }) => (
+export const ItemListItem = ({ id, name, image_path, isAdmin, commentCount, isHidden }) => (
     <Link to={`/item/${id}`}>
         <div className="card pt-2 m-2">
             <div className='center'>
-                <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '100px'}} alt="missing product image" />
+                <img src={image_path} style={{width:'100%', maxWidth: '100px'}} alt="missing product image" />
             </div>
             <div className="card-body">
                 <p className="card-text center m-0">{name}</p>
@@ -20,8 +20,10 @@ export const ItemListItem = ({ id, name, isAdmin, commentCount, isHidden }) => (
 );
 
 export const ConnectedItemListItem = connect((state, ownProps) => {
+    let item = state.items.find(item => item.id === ownProps.id);
     return {
-        ...state.items.find(item => item.id === ownProps.id),
+        ...item,
+        image_path: item.img ? `${__dirname}public/images/${item.img}` : `${__dirname}public/no-img.png`,
         isAdmin: state.user.isAdmin,
         commentCount: state.comments.filter(comment => comment.item === ownProps.id).length
     };

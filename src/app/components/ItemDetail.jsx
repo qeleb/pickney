@@ -20,6 +20,7 @@ const ItemDetail = ({
     id,                 // ID of Selected Item (For Matching Item Info)
     comments,           // Comments on the Item
     item,               // Item
+    image_path,         // Image Path
     sessionID,          // Session ID
     groups,             // All Available Groups
     isAdmin,            // True/False, If User is Admin
@@ -66,6 +67,7 @@ const ItemDetail = ({
 
                         <form className="input-group pt-3 pb-0 mb-3">
                             <p className="m-0 me-3">image</p>
+                            <img src={image_path} style={{width:'100%', maxWidth: '100px'}} alt="missing product image" />
                             <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
                         </form>
                     </>
@@ -73,9 +75,8 @@ const ItemDetail = ({
                     <>
                         <h1 className="center">{item.name}</h1>
                         <hr />
-                        {/* TODO: Load Actual Product Images */}
                         <div style={{display: 'flex', justifyContent: 'center'}}>
-                            <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
+                            <img src={image_path} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
                         </div>
                         <h5 className="p-5">{item.desc}</h5>
                     </>
@@ -109,9 +110,11 @@ const ItemDetail = ({
 
 const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id;
+    let item = state.items.find(item => item.id === id);
     return {
         id,
-        item: state.items.find(item => item.id === id),
+        item: item,
+        image_path: item.img ? `${__dirname}public/images/${item.img}` : `${__dirname}public/no-img.png`,
         comments: state.comments.filter(comment => comment.item === id),
         sessionID: state.session.id,
         groups: state.groups,
@@ -126,7 +129,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         setItemDesc (e) { dispatch(setItemDesc(id, e.target.value)); },
         setItemGroup(e) { dispatch(setItemGroup(id, e.target.value)); },
         setItemInventory(e) { dispatch(setItemInventory(id, e.target.value)); },
-        setItemImg(e) { dispatch(setItemImg(id, e.target.value)); },
+        setItemImg(e) { dispatch(setItemImg(id, e.target.files[0] || e.dataTransfer.files[0])); },
         setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
         setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },
         addItemComment(itemID, ownerID, e) {

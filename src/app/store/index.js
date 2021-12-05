@@ -52,6 +52,10 @@ const reducer = combineReducers({
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, desc: action.desc } : item;
                 });
+            case mutations.SET_ITEM_IMG:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, img: action.img } : item;
+                });
             case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
@@ -59,10 +63,6 @@ const reducer = combineReducers({
             case mutations.SET_ITEM_INVENTORY:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, inventory: action.inventory } : item;
-                });
-            case mutations.SET_ITEM_IMG:
-                return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, img: action.img } : item;
                 });
             case mutations.SET_ITEM_HIDDEN:
                 return items.map(item => {
@@ -169,7 +169,7 @@ const sagas = [
     function* itemModificationSaga() {
         while (true) {
             const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_DESC, mutations.SET_ITEM_GROUP,
-                mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
+                mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
             if (!(yield select(state => state.user.isAdmin))) continue; // Deny Item Modification if Not Admin
             axios.post(`${URL}/item/update`, {
                 item: {
@@ -178,12 +178,21 @@ const sagas = [
                     desc: item.desc,
                     group: item.groupID, // TODO: Allow for group removal
                     inventory: item.inventory,
-                    img: item.img,
                     isHidden: item.isHidden,
                     isDeleted: item.isDeleted
                 },
                 user_id: yield select(state => state.session.id)
             });
+        }
+    },
+    function* imgModificationSaga() {
+        while (true) {
+            const img = yield take([mutations.SET_ITEM_IMG]);
+            let fd = new FormData();
+            fd.append('img', img.img);
+            fd.append('user_id', yield select(state => state.session.id));
+            fd.append('item_id', img.itemID);
+            axios.post(`${URL}/item/update_img`, fd, { headers: { 'content-type': 'multipart/form-data' } });
         }
     },
     function* commentCreationSaga() {

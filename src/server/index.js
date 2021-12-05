@@ -2,6 +2,7 @@ import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 import { v4 as uuid } from 'uuid';
 import md5 from 'md5';
 import { MongoClient } from 'mongodb';
@@ -9,6 +10,7 @@ import { MongoClient } from 'mongodb';
 // Server Configuration
 const PORT = process.env.PORT || 7777;
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/pickney';
+const UPLOAD_LOCATION = path.resolve(__dirname, '../../public/images');
 const PASSWORD_REQUIREMENTS = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,32}$/;
 
 const authenticationTokens = [];    // User Authentication Tokens
@@ -18,6 +20,13 @@ let db = null;                      // MongoDB Connection
 let app = express();
 app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
 app.listen(PORT, console.info("Server running, listening on port ", PORT));
+const upload = multer({
+    dest: UPLOAD_LOCATION,
+    onFileUploadStart: async (file, req, res) => {
+        if (!(await (await connectDB()).collection('users').findOne({ id: req.body.user_id })).isAdmin)
+            return false; // Make Sure User is Admin Before Accepting Files
+    }
+});
 
 // Serve Dist Bundle if in Production
 if (process.env.NODE_ENV === 'production') {
@@ -140,17 +149,23 @@ app.post('/item/update', async (req, res) => {
     if (!(await (await connectDB()).collection('users').findOne({ id: req.body.user_id })).isAdmin)
         return res.status(500).send({ message: "this function requires admin privileges" });
     
-    let { id, name, desc, group, inventory, img, isHidden, isDeleted } = req.body.item;
+    let { id, name, desc, group, inventory, isHidden, isDeleted } = req.body.item;
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
     //TODO: Allow removing groups
     if (group) await collection_items.updateOne({ id }, { $addToSet: { group } });
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
-    //TODO: Upload Image to Public Folder Here
-    if (img) await collection_items.updateOne({ id }, { $set: { img } }); //TODO: Fix Image name upload
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
+    res.status(200).send();
+});
+
+// Route: Update an Item (ADMIN)
+app.post('/item/update_img', upload.single('img'), async (req, res) => {
+    let item_id = req.body.item_id;
+    let img = req.file.filename;
+    await (await connectDB()).collection('items').updateOne({ id: item_id }, { $set: { img: img } });
     res.status(200).send();
 });
 

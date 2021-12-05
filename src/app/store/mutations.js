@@ -3,9 +3,9 @@ export const REQUEST_ITEM_CREATE = 'REQUEST_ITEM_CREATE';
 
 export const SET_ITEM_NAME = 'SET_ITEM_NAME';
 export const SET_ITEM_DESC = 'SET_ITEM_DESC';
+export const SET_ITEM_IMG = 'SET_ITEM_IMG';
 export const SET_ITEM_GROUP = 'SET_ITEM_GROUP';
 export const SET_ITEM_INVENTORY = 'SET_ITEM_INVENTORY';
-export const SET_ITEM_IMG = 'SET_ITEM_IMG';
 export const SET_ITEM_HIDDEN = 'SET_ITEM_HIDDEN';
 export const SET_ITEM_DELETED = 'SET_ITEM_DELETED';
 export const ADD_ITEM_COMMENT = 'ADD_ITEM_COMMENT';
@@ -45,6 +45,12 @@ export const setItemDesc = (itemID, desc) => ({
     desc
 });
 
+export const setItemImg = (itemID, img) => ({
+    type: SET_ITEM_IMG,
+    itemID,
+    img
+});
+
 export const setItemGroup = (itemID, groupID) => ({
     type: SET_ITEM_GROUP,
     itemID,
@@ -55,12 +61,6 @@ export const setItemInventory = (itemID, inventory) => ({
     type: SET_ITEM_INVENTORY,
     itemID,
     inventory
-});
-
-export const setItemImg = (itemID, img) => ({
-    type: SET_ITEM_IMG,
-    itemID,
-    img
 });
 
 export const setItemHidden = (id, isHidden = true) => ({
