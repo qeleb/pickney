@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga'
-import { take, put } from 'redux-saga/effects';
+import { select, take, put } from 'redux-saga/effects';
 import { createLogger } from 'redux-logger'
 import { createBrowserHistory } from 'history'
 import { v4 as uuid } from 'uuid';
@@ -12,10 +12,10 @@ import * as mutations from './mutations'
 const URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:7777';
 const DEFAULT_STATE = {
     session: {},
-    comments: [],
-    users: [],
+    user: '',
+    items: [],
     groups: [],
-    items: []
+    comments: []
 };
 
 // State Management
@@ -33,29 +33,12 @@ const reducer = combineReducers({
                 return userSession;
         }
     },
-    comments: (comments = DEFAULT_STATE.comments, action) => {
-        switch (action.type) {
-            case mutations.ADD_ITEM_COMMENT:
-                let { type, owner, item, content, id } = action;
-                return [...comments, { owner, item, content, id }];
-            case mutations.SET_STATE:
-                return action.state.comments;
-        }
-        return comments;
-    },
-    users: (users = DEFAULT_STATE.users, action) => {
+    user: (user = DEFAULT_STATE.user, action) => {
         switch (action.type) {
             case mutations.SET_STATE:
-                return action.state.users;
+                return action.state.user;
         }
-        return users;
-    },
-    groups: (groups = DEFAULT_STATE.groups, action) => {
-        switch (action.type) {
-            case mutations.SET_STATE:
-                return action.state.groups;
-        }
-        return groups;
+        return user;
     },
     items(items = DEFAULT_STATE.items, action) {
         switch (action.type) {
@@ -101,6 +84,23 @@ const reducer = combineReducers({
                 }]
         }
         return items;
+    },
+    groups: (groups = DEFAULT_STATE.groups, action) => {
+        switch (action.type) {
+            case mutations.SET_STATE:
+                return action.state.groups;
+        }
+        return groups;
+    },
+    comments: (comments = DEFAULT_STATE.comments, action) => {
+        switch (action.type) {
+            case mutations.ADD_ITEM_COMMENT:
+                let { type, owner, item, content, id } = action;
+                return [...comments, { owner, item, content, id }];
+            case mutations.SET_STATE:
+                return action.state.comments;
+        }
+        return comments;
     }
 });
 
@@ -115,7 +115,6 @@ const sagas = [
             try {
                 const { data } = yield axios.post(`${URL}/user/create`, { username, password });
                 console.log(data); //TODO: Remove Console Log
-
                 yield put(mutations.setState({ ...data.state, session: { id: data.userID } }));
                 yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED));
                 history.push('/');
@@ -149,6 +148,7 @@ const sagas = [
     function* itemCreationSaga() {
         while (true) {
             const { groupID } = yield take(mutations.REQUEST_ITEM_CREATE);
+            if (!(yield select(state => state.user.isAdmin))) continue; // Deny Item Creation if Not Admin
             const itemID = uuid();
             let mutation = mutations.createItem(itemID, groupID);
             yield axios.post(`${URL}/item/new`, {
@@ -169,6 +169,7 @@ const sagas = [
         while (true) {
             const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_DESC, mutations.SET_ITEM_GROUP,
                 mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
+            if (!(yield select(state => state.user.isAdmin))) continue; // Deny Item Modification if Not Admin
             axios.post(`${URL}/item/update`, {
                 item: {
                     id: item.itemID,

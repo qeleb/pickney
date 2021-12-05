@@ -37,9 +37,9 @@ const assembleUserState = async (user) => {
     let items = await db.collection('items').find({ isDeleted: false }).toArray();
     return {
         session: { authenticated: 'AUTHENTICATED', id: user.id },
-        groups: await db.collection('groups').find({ owner: user.id }).toArray(),
+        user: await db.collection('users').findOne({ id: user.id }),
         items,
-        users: [ await db.collection('users').findOne({ id: user.id }) ],
+        groups: await db.collection('groups').find({ owner: user.id }).toArray(),
         comments: await db.collection('comments').find({ item: { $in: items.map(item => item.id) } }).toArray()
     };
 }

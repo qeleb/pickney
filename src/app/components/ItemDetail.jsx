@@ -95,7 +95,7 @@ const ItemDetail = ({
                 <hr />
                 <div className="list-group p-3 pt-0" style={{ border: 'none' }}>
                     {comments.map(comment =>
-                        <li className="list-group-item ms-5 me-5" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
+                        <li className="list-group-item ms-5 me-5 mt-1" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
                 </div>
                 <form className="input-group p-3 ps-0" onSubmit={(e) => addItemComment(id, sessionID, e)}>
                     <p className="me-4">post a comment</p>
@@ -115,7 +115,7 @@ const mapStateToProps = (state, ownProps) => {
         comments: state.comments.filter(comment => comment.item === id),
         sessionID: state.session.id,
         groups: state.groups,
-        isAdmin: state.users.find(user => id === id).isAdmin
+        isAdmin: state.user.isAdmin
     }
 }
 
