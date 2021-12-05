@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { history } from '../store';
 import { v4 as uuid } from 'uuid';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
@@ -32,65 +33,72 @@ const ItemDetail = ({
     addItemComment
 }) => {
     return (
-        <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
-            {isAdmin ?
-                <div className="card p-3 col-10">
-                    <h1>product editor</h1>
-                    <div className="input-group">
-                        <p className="me-4">name</p>
-                        <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
-                        <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
-                        <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
-                    </div>
-
-                    <div className="input-group pt-3 pb-0">
-                        <p className="me-4">description</p>
-                        <textarea type="text" value={item.desc} rows='4' onChange={setItemDesc} className="form-control form-control-lg" />
-                    </div>
-
-                    <form className="input-group pt-3 pb-0">
-                        <span className="me-4">category</span>
-                        <select onChange={setItemGroup} className="form-control">
-                            <option key='default' value={null}>keep current category</option>
-                            {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
-                        </select>
-                    </form>
-
-                    <div className="input-group pt-3 pb-0">
-                        <p className="me-4">inventory</p>
-                        <input type="number" value={item.inventory} onChange={setItemInventory} className="form-control form-control" />
-                    </div>
-
-                    <form className="input-group pt-3 pb-0">
-                        <p className="m-0 me-3">image</p>
-                        <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
-                    </form>
-
-                    <div className="mt-5">
-                        <p className="m-0 mb-1">comments</p>
-                        <div className="list-group p-3 pt-0">
-                            {comments.map(comment => <li className="list-group-item" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} /> : {comment.content}</li>)}
+        <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
+            <div className="card p-4">
+                {isAdmin ?
+                    <>
+                        <h1>product editor</h1>
+                        <div className="input-group">
+                            <p className="me-4">name</p>
+                            <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
+                            <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
+                            <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
                         </div>
-                    </div>
 
-                    <form className="input-group p-3 ps-0" onSubmit={(e) => addItemComment(id, sessionID, e)}>
-                        <p className="me-4">post a comment</p>
-                        <input type="text" name="commentContents" autoComplete="off" placeholder="comment" className="form-control" />
-                        <button type="submit" className="btn btn-primary">post</button>
-                    </form>
+                        <div className="input-group pt-3 pb-0">
+                            <p className="me-4">description</p>
+                            <textarea type="text" value={item.desc} rows='4' onChange={setItemDesc} className="form-control form-control-lg" />
+                        </div>
 
-                    <Link to="/" className="btn btn-primary mt-5">return to home page</Link>
+                        <form className="input-group pt-3 pb-0">
+                            <span className="me-4">category</span>
+                            <select onChange={setItemGroup} className="form-control">
+                                <option key='default' value={null}>keep current category</option>
+                                {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+                            </select>
+                        </form>
+
+                        <div className="input-group pt-3 pb-0">
+                            <p className="me-4">inventory</p>
+                            <input type="number" value={item.inventory} onChange={setItemInventory} className="form-control form-control" />
+                        </div>
+
+                        <form className="input-group pt-3 pb-0">
+                            <p className="m-0 me-3">image</p>
+                            <input className='btn btn-secondary' onChange={setItemImg} type="file" accept=".jpg, .jpeg, .png" />
+                        </form>
+                    </>
+                :
+                    <>
+                        <h1 className="center">{item.name}</h1>
+                        {/* TODO: Load Actual Product Images */}
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
+                        </div>
+                        <h5 className="p-5">{item.desc}</h5>
+                    </>
+                }
+                <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                    <button className="btn btn-warning" style={{maxWidth: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
+                    {/*TODO: Add Item to Favorites*/}
+                    <button className="btn btn-secondary" style={{maxWidth: '20%'}}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    {/*TODO: Add Item to Cart*/}
+                    <button className="btn btn-primary" style={{maxWidth: '20%'}}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
                 </div>
-            :
-                <div className="card p-3 col-10">
-                    <h1 className="center">{item.name}</h1>
-                    {/* TODO: Load Actual Product Images */}
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <img src={`${__dirname}public/no-img.png`} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
-                    </div>
-                    <h5>{item.desc}</h5>
+            </div>
+
+            <div className="card p-3 mt-5">
+                <h1>comments</h1>
+                <div className="list-group p-3 pt-0" style={{ border: 'none' }}>
+                    {comments.map(comment =>
+                        <li className="list-group-item ms-5 me-5" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
                 </div>
-            }
+                <form className="input-group p-3 ps-0" onSubmit={(e) => addItemComment(id, sessionID, e)}>
+                    <p className="me-4">post a comment</p>
+                    <input type="text" name="commentContents" autoComplete="off" placeholder="comment" className="form-control" />
+                    <button type="submit" className="btn btn-primary">post</button>
+                </form>
+            </div>
         </div>
     )
 }
