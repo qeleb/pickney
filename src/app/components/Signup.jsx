@@ -8,7 +8,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h1>sign up</h1>
-                <Link to="/" className='h4'>login<i className="bi bi-person ms-2"></i></Link>
+                <Link to="/login" className='h4'>login<i className="bi bi-person ms-2"></i></Link>
             </div>
             <form onSubmit={requestCreateUserAccount}>
                 <span>username</span>
@@ -26,9 +26,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
     </div>
 );
 
-const mapStateToProps = state => ({
-    authenticated: state.session.authenticated
-});
+const mapStateToProps = state => ({ authenticated: state.session.authenticated });
 
 const mapDispatchToProps = dispatch => ({
     requestCreateUserAccount(e) {

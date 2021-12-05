@@ -9,7 +9,8 @@ import {
     setItemGroup,
     setItemImg,
     setItemHidden,
-    addItemComment
+    setItemDeleted,
+    addItemComment,
 } from '../store/mutations'
 
 /* Automatically calls the REST API [via a mutation] to update the server on every change. */
@@ -17,8 +18,8 @@ const ItemDetail = ({
     id,
     comments,
     item,
-    isOwner, //TODO: Check if owner to show edit form
     isHidden,
+    isDeleted,
     sessionID,
     groups,
 
@@ -26,6 +27,7 @@ const ItemDetail = ({
     setItemGroup,
     setItemImg,
     setItemHidden,
+    setItemDeleted,
     addItemComment
 }) => {
     return (
@@ -33,7 +35,8 @@ const ItemDetail = ({
             <div className="input-group">
                 <p className="me-4">title</p>
                 <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
-                <button className="btn btn-secondary ml-2" onClick={() => setItemHidden(id, !isHidden)}>{isHidden ? `show` : `hide`} this item</button>
+                <button className="btn btn-secondary" onClick={() => setItemHidden(id, !isHidden)}>{isHidden ? `show` : `hide`}</button>
+                <button className="btn btn-danger" onClick={() => setItemDeleted(id, !isDeleted)}>{isDeleted ? `undelete` : `delete`}</button>
             </div>
 
             <form className="input-group pt-3 pb-0">
@@ -62,52 +65,39 @@ const ItemDetail = ({
                 <button type="submit" className="btn btn-primary">post</button>
             </form>
 
-            <Link to="/dashboard"><button className="btn btn-primary mt-2">back</button></Link>
+            <Link to={"/"}><button className="btn btn-primary mt-2">return to homepage</button></Link>
         </div>
     )
 }
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id;
     let item = state.items.find(item => item.id === id);
-    let comments = state.comments.filter(comment => comment.item === id);
-    let isOwner = state.session.id === item.owner;
-    let groups = state.groups;
-
     return {
         id,
         item,
-        comments,
-        isOwner,
+        comments: state.comments.filter(comment => comment.item === id),
         sessionID: state.session.id,
         isHidden: item.isHidden,
-        groups
+        isDeleted: item.isDeleted,
+        groups: state.groups
     }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
     let id = ownProps.match.params.id;
     return {
-        setItemName(e) {
-            dispatch(setItemName(id, e.target.value));
-        },
-        setItemGroup(e) {
-            dispatch(setItemGroup(id, e.target.value));
-        },
-        setItemImg(e) {
-            dispatch(setItemImg(id, e.target.value));
-        },
-        setItemHidden(id, isHidden) {
-            dispatch(setItemHidden(id, isHidden));
-        },
+        setItemName (e) { dispatch(setItemName(id, e.target.value)); },
+        setItemGroup(e) { dispatch(setItemGroup(id, e.target.value)); },
+        setItemImg(e) { dispatch(setItemImg(id, e.target.value)); },
+        setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
+        setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },
         addItemComment(itemID, ownerID, e) {
-            let input = e.target[`commentContents`];
-            let commentID = uuid();
-            let content = input.value;
             e.preventDefault();
-            if (content !== ``) {
-                input.value = ``;
-                dispatch(addItemComment(commentID, itemID, ownerID, content));
+            let input = e.target['commentContents'];
+            if (input.value.length > 0) {
+                dispatch(addItemComment(uuid()/*ID*/, itemID, ownerID, input.value));
+                input.value =''; // Clear Comment Box
             }
         }
     }

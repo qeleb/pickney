@@ -24,9 +24,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
     </div>
 );
 
-const mapStateToProps = ({ session }) => ({
-    authenticated: session.authenticated
-});
+const mapStateToProps = ({ session }) => ({ authenticated: session.authenticated });
 
 const mapDispatchToProps = (dispatch) => ({
     authenticateUser(e) {

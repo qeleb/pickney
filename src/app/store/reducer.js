@@ -67,13 +67,17 @@ export const reducer = combineReducers({
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, isHidden: action.isHidden } : item;
                 });
+            case mutations.SET_ITEM_DELETED:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, isDeleted: action.isDeleted } : item;
+                });
             case mutations.CREATE_ITEM:
                 return [...items, {
                     id: action.itemID,
                     name: "new item",
                     group: action.groupID,
-                    owner: action.ownerID,
-                    isHidden: false
+                    isHidden: false,
+                    isDeleted: false
                 }]
         }
         return items;

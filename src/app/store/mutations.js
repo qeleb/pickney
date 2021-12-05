@@ -5,6 +5,7 @@ export const SET_ITEM_NAME = `SET_ITEM_NAME`;
 export const SET_ITEM_GROUP = `SET_ITEM_GROUP`;
 export const SET_ITEM_IMG = `SET_ITEM_IMG`;
 export const SET_ITEM_HIDDEN = `SET_ITEM_HIDDEN`;
+export const SET_ITEM_DELETED = `SET_ITEM_DELETED`;
 export const ADD_ITEM_COMMENT = `ADD_ITEM_COMMENT`;
 
 export const REQUEST_USER_ACCOUNT_CREATE = `REQUEST_USER_ACCOUNT_CREATE`;
@@ -18,11 +19,10 @@ export const NOT_AUTHENTICATED = `NOT_AUTHENTICATED`;
 export const USERNAME_RESERVED = `USERNAME_RESERVED`;
 export const SET_STATE = `SET_STATE`;
 
-export const createItem = (itemID, groupID, ownerID) => ({
+export const createItem = (itemID, groupID) => ({
     type: CREATE_ITEM,
     itemID,
     groupID,
-    ownerID
 });
 
 export const requestItemCreation = (groupID) => ({
@@ -52,6 +52,12 @@ export const setItemHidden = (id, isHidden = true) => ({
     type: SET_ITEM_HIDDEN,
     itemID: id,
     isHidden
+});
+
+export const setItemDeleted = (id, isDeleted = true) => ({
+    type: SET_ITEM_DELETED,
+    itemID: id,
+    isDeleted
 });
 
 export const addItemComment = (commentID, itemID, ownerID, content) => ({

@@ -5,8 +5,6 @@ export const UsernameDisplay = ({ name }) => (
     <span>{name.length > 10 ? name.slice(0, 10) + '...' : name}</span>
 );
 
-const mapStateToProps = (state, ownProps) => {
-    return state.users.find(user => user.id === ownProps.id)
-};
+const mapStateToProps = (state, ownProps) => state.users.find(user => user.id === ownProps.id);
 
 export const ConnectedUsernameDisplay = connect(mapStateToProps)(UsernameDisplay);

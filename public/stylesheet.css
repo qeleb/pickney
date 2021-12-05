@@ -114,6 +114,7 @@ a:hover {
 
 .dropdown-menu {
   background-color: #171717;
+  min-width: 12rem;
 }
 
 .list-group-item {

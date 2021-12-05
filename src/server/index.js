@@ -1,43 +1,137 @@
-import { MongoClient } from 'mongodb';
 import path from 'path';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { v4 as uuid } from 'uuid';
+import md5 from 'md5';
+import { MongoClient } from 'mongodb';
 
-import { connectDB } from './connect-db';
-import { authenticationRoute } from './authenticate'
+// Server Configuration
+const PORT = process.env.PORT || 7777;
+const DB_URL = process.env.MONGODB_URI || `mongodb://localhost:27017/pickney`;
 
-let port = process.env.PORT || 7777;
+const authenticationTokens = [];    // User Authentication Tokens
+let db = null;                      // MongoDB Connection
+
+// Initialize Express & Middleware
 let app = express();
-
 app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
-app.listen(port, console.info("Server running, listening on port ", port));
+app.listen(PORT, console.info("Server running, listening on port ", PORT));
 
-authenticationRoute(app);
-
-if (process.env.NODE_ENV == `production`) {
+// Serve Dist Bundle if in Production
+if (process.env.NODE_ENV === `production`) {
     app.use(express.static(path.resolve(__dirname, '../../dist')));
-    app.get('/*', (req, res) => {
-        res.sendFile(path.resolve('index.html'));
-    });
+    app.get('/*', (req, res) => res.sendFile(path.resolve('index.html')));
 }
 
+// Connect to MongoDB
+const connectDB = async () => {
+    if (db) return db; // Return Existing Connection if Available
+    db = (await MongoClient.connect(DB_URL, { useNewUrlParser: true })).db();
+    return db;
+}
+
+// Assemble User State
+const assembleUserState = async (user) => {
+    let items = await db.collection(`items`).find({ isDeleted: false }).toArray();
+    return {
+        session: { authenticated: `AUTHENTICATED`, id: user.id },
+        groups: await db.collection(`groups`).find({ owner: user.id }).toArray(),
+        items,
+        users: [ await db.collection(`users`).findOne({ id: user.id }) ],
+        comments: await db.collection(`comments`).find({ item: { $in: items.map(item => item.id) } }).toArray()
+    };
+}
+
+/**
+ * Database Routes
+ */
+
+// DB Route: Login User
+app.post('/authenticate', async (req, res) => {
+    let { username, password } = req.body;      // The Credentials Submitted
+
+    // Search for User in DB
+    let user = await (await connectDB()).collection(`users`).findOne({ name: username });
+
+    // Deny Login if User is Not Found or Password is Incorrect
+    if (!user) return res.status(500).send(`user not found`);
+    if (md5(password) !== user.passwordHash) return res.status(500).send('password incorrect');
+
+    // Generate an Authentication Token for Successfully Logged-In User
+    let token = uuid();
+    authenticationTokens.push({ token, userID: user.id });
+
+    // Log in the User
+    let state = await assembleUserState(user);
+    res.send({ token, state });
+});
+
+// DB Route: Create New User
+app.post('/user/create', async (req, res) => {
+    let { username, password } = req.body;      // The Credentials Submitted
+    let db = await connectDB();                 // Connection to DB
+    let collection = db.collection(`users`);    // Users Collection in DB
+
+    // Check if the Username is Already Taken
+    if (await collection.findOne({ name: username })) {
+        res.status(500).send({ message: "a user by that name already exists" });
+        return;
+    };
+
+    // Create a User ID & Add to DB
+    let userID = uuid();
+    await collection.insertOne({
+        name: username,
+        id: userID,
+        passwordHash: md5(password)
+    });
+
+    // Create Groups for the User
+    await db.collection(`groups`).insertMany([
+    {
+        id: uuid(),
+        owner: userID,
+        name: `cart`
+    },
+    {
+        id: uuid(),
+        owner: userID,
+        name: `favorites`
+    },
+    {
+        id: uuid(),
+        owner: userID,
+        name: `purchased`
+    }]);
+
+    // Return Status 200 & State
+    let state = await assembleUserState({ id: userID, name: username });
+    res.status(200).send({ userID, state });
+});
+
+// DB Route: Create New Item (ADMIN)
 app.post('/item/new', async (req, res) => {
     await (await connectDB()).collection(`items`).insertOne(req.body.item);
     res.status(200).send();
 });
 
+// DB Route: Update an Item (ADMIN)
 app.post('/item/update', async (req, res) => {
-    let { id, name, group, img, isHidden } = req.body.item;
+    let { id, name, group, img, isHidden, isDeleted } = req.body.item;
+    console.log('GROUP: ', group); //TODO: REMOVE
     let collection_items = (await connectDB()).collection(`items`);
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
-    if (group) await collection_items.updateOne({ id }, { $set: { group } });
+    //TODO: Allow removing groups
+    if (group) await collection_items.updateOne({ id }, { $addToSet: { group } });
     //TODO: Upload Image to Public Folder Here
     if (img) await collection_items.updateOne({ id }, { $set: { img } }); //TODO: Fix Image name upload
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
+    if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
     res.status(200).send();
 });
 
+// DB Route: Comment on an Item
 app.post('/comment/new', async (req, res) => {
     await (await connectDB()).collection(`comments`).insertOne(req.body.comment)
     res.status(200).send();
