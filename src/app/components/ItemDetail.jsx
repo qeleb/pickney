@@ -7,6 +7,7 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
     setItemName,
     setItemGroup,
+    setItemInventory,
     setItemImg,
     setItemHidden,
     setItemDeleted,
@@ -18,13 +19,12 @@ const ItemDetail = ({
     id,
     comments,
     item,
-    isHidden,
-    isDeleted,
     sessionID,
     groups,
 
     setItemName,
     setItemGroup,
+    setItemInventory,
     setItemImg,
     setItemHidden,
     setItemDeleted,
@@ -32,11 +32,12 @@ const ItemDetail = ({
 }) => {
     return (
         <div className="card p-3 col-6">
+            {console.log('ITEM', item)}
             <div className="input-group">
                 <p className="me-4">title</p>
                 <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
-                <button className="btn btn-secondary" onClick={() => setItemHidden(id, !isHidden)}>{isHidden ? `show` : `hide`}</button>
-                <button className="btn btn-danger" onClick={() => setItemDeleted(id, !isDeleted)}>{isDeleted ? `undelete` : `delete`}</button>
+                <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? `show` : `hide`}</button>
+                <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? `undelete` : `delete`}</button>
             </div>
 
             <form className="input-group pt-3 pb-0">
@@ -46,6 +47,11 @@ const ItemDetail = ({
                     {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
                 </select>
             </form>
+
+            <div className="input-group pt-3 pb-0">
+                <p className="me-4">inventory</p>
+                <input type="number" value={item.inventory} onChange={setItemInventory} className="form-control form-control" />
+            </div>
 
             <form className="input-group pt-3 pb-0">
                 <p className="m-0 me-3">item image</p>
@@ -78,8 +84,6 @@ const mapStateToProps = (state, ownProps) => {
         item,
         comments: state.comments.filter(comment => comment.item === id),
         sessionID: state.session.id,
-        isHidden: item.isHidden,
-        isDeleted: item.isDeleted,
         groups: state.groups
     }
 }
@@ -89,6 +93,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     return {
         setItemName (e) { dispatch(setItemName(id, e.target.value)); },
         setItemGroup(e) { dispatch(setItemGroup(id, e.target.value)); },
+        setItemInventory(e) { dispatch(setItemInventory(id, e.target.value)); },
         setItemImg(e) { dispatch(setItemImg(id, e.target.value)); },
         setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
         setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },

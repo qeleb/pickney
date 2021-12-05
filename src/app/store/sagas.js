@@ -17,6 +17,7 @@ export function* itemCreationSaga() {
                 id: itemID,
                 name: "new item",
                 group: [groupID],
+                inventory: 0,
                 isHidden: false,
                 isDeleted: false
             }
@@ -34,12 +35,14 @@ export function* commentCreationSaga() {
 
 export function* itemModificationSaga() {
     while (true) {
-        const item = yield take([mutations.SET_ITEM_GROUP, mutations.SET_ITEM_NAME, mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
+        const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_GROUP, mutations.SET_ITEM_INVENTORY, 
+            mutations.SET_ITEM_IMG, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
         axios.post(URL + `/item/update`, {
             item: {
                 id: item.itemID,
-                group: item.groupID,
                 name: item.name,
+                group: item.groupID,
+                inventory: item.inventory,
                 img: item.img,
                 isHidden: item.isHidden,
                 isDeleted: item.isDeleted

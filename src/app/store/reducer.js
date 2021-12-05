@@ -59,6 +59,10 @@ export const reducer = combineReducers({
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
                 });
+            case mutations.SET_ITEM_INVENTORY:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, inventory: action.inventory } : item;
+                });
             case mutations.SET_ITEM_IMG:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, img: action.img } : item;
@@ -76,6 +80,7 @@ export const reducer = combineReducers({
                     id: action.itemID,
                     name: "new item",
                     group: action.groupID,
+                    inventory: 0,
                     isHidden: false,
                     isDeleted: false
                 }]

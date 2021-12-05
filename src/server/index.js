@@ -118,11 +118,13 @@ app.post('/item/new', async (req, res) => {
 
 // Route: Update an Item (ADMIN)
 app.post('/item/update', async (req, res) => {
-    let { id, name, group, img, isHidden, isDeleted } = req.body.item;
+    let { id, name, group, inventory, img, isHidden, isDeleted } = req.body.item;
+    console.log('INVENTORY', inventory)
     let collection_items = (await connectDB()).collection(`items`);
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     //TODO: Allow removing groups
     if (group) await collection_items.updateOne({ id }, { $addToSet: { group } });
+    if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     //TODO: Upload Image to Public Folder Here
     if (img) await collection_items.updateOne({ id }, { $set: { img } }); //TODO: Fix Image name upload
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
