@@ -61,8 +61,8 @@ const ItemDetail = ({
                             </select>
                         */}
                         <span className="me-4">category</span>
-                        <ul onChange={setItemGroup}>
-                            {groups.map(group => <li key={group.id}><input type="checkbox" value={group.name}/>{group.name}</li>)}
+                        <ul style={{listStyleType:"none"}}>
+                            {groups.map(group => <li key={group.id}><input type="checkbox" value={group.id} onChange={setItemGroup}/>{group.name}</li>)}
                         </ul>
                           {/* 
                         <input 
