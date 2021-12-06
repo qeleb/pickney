@@ -7,7 +7,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
     <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h1>sign up</h1>
+                <h1><i className="bi bi-person-plus"></i>&nbsp;sign up</h1>
                 <Link to="/login" className='h4'>login<i className="bi bi-person ms-2"></i></Link>
             </div>
             <form onSubmit={requestCreateUserAccount}>
@@ -19,7 +19,7 @@ const SignupComponent = ({ requestCreateUserAccount, authenticated }) => (
                 <input type="password" placeholder="password" name="password-confirm" className="form-control mt-1  mb-4" />
 
                 {authenticated == mutations.USERNAME_RESERVED ? <p>this username already exists</p> : null}
-                <button type="submit" className="form-control mt-2 btn btn-primary">sign up</button>
+                <button type="submit" className="form-control mt-2 btn btn-primary"><i className="bi bi-person-plus"></i>&nbsp;sign up</button>
             </form>
         </div>
     </div>

@@ -7,7 +7,7 @@ import { removeFromCollection } from '../store/mutations'
 const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
     <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
-            <h1>cart</h1>
+            <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
             {cart.length > 0 ?
                 <table className="table">
                     <thead>
@@ -24,7 +24,7 @@ const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
                             <th>{i + 1}.</th>
                             <th><ConnectedItemListItem {...{id: item.id}} /></th>
                             <th>{item.quantity}</th>
-                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(sessionID, id, 'cart')}>Remove</button></th>
+                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(sessionID, id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
                         </tr>
                     ))}
                     </tbody>
@@ -34,7 +34,7 @@ const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
             }
             <div className="mt-5" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                <button className="btn btn-primary" style={{width: '40%'}}><i className="bi bi-star"></i>&nbsp;checkout</button>
+                <button className="btn btn-primary" style={{width: '40%'}}><i className="bi bi-cart-check"></i>&nbsp;checkout</button>
             </div>
         </div>
     </div>
