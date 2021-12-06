@@ -130,18 +130,18 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-function mapDispatchToProps(dispatch, ownProps) {
+const mapDispatchToProps = (dispatch, ownProps) => {
     let id = ownProps.match.params.id;
     return {
-        setItemName (e) { dispatch(setItemName(id, e.target.value)); },
-        setItemDesc (e) { dispatch(setItemDesc(id, e.target.value)); },
-        setItemGroup(e) { dispatch(setItemGroup(id, e.target.value)); },
-        setItemInventory(e) { dispatch(setItemInventory(id, e.target.value)); },
-        setItemImg(e) { dispatch(setItemImg(id, e.target.files[0] || e.dataTransfer.files[0])); },
-        setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
-        setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },
-        addToCollection(ownerID, itemID, location) { dispatch(addToCollection(ownerID, itemID, location)); },
-        addItemComment(itemID, ownerID, e) {
+        setItemName: (e) => dispatch(setItemName(id, e.target.value)),
+        setItemDesc: (e) => dispatch(setItemDesc(id, e.target.value)),
+        setItemGroup: (e) => dispatch(setItemGroup(id, e.target.value)),
+        setItemInventory: (e) => dispatch(setItemInventory(id, e.target.value)),
+        setItemImg: (e) => dispatch(setItemImg(id, e.target.files[0] || e.dataTransfer.files[0])),
+        setItemHidden: (id, isHidden) => dispatch(setItemHidden(id, isHidden)),
+        setItemDeleted: (id, isDeleted) => dispatch(setItemDeleted(id, isDeleted)),
+        addToCollection: (ownerID, itemID, location) => dispatch(addToCollection(ownerID, itemID, location)),
+        addItemComment: (itemID, ownerID, e) => {
             e.preventDefault();
             let input = e.target['commentContents'];
             if (input.value.length > 0) {

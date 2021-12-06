@@ -21,7 +21,7 @@ const DEFAULT_STATE = {
 // State Management
 const reducer = combineReducers({
     session(userSession = DEFAULT_STATE.session, action) {
-        let { type, authenticated, session } = action;
+        let { type, authenticated } = action;
         switch (type) {
             case mutations.SET_STATE:
                 return { ...userSession, id: action.state.session.id };
@@ -41,7 +41,7 @@ const reducer = combineReducers({
                 let { item } = action;
                 if (action.location === 'favorites')
                     return { ...user, favorites: [...user.favorites, item] };
-                return { ...user, cart: [...user.cart, item] }; // Else Add to Cart
+                return { ...user, cart: [...user.cart, { id: item, quantity: 1 } ] }; // Else Add to Cart
         }
         return user;
     },
@@ -100,11 +100,11 @@ const reducer = combineReducers({
     },
     comments: (comments = DEFAULT_STATE.comments, action) => {
         switch (action.type) {
+            case mutations.SET_STATE:
+                return action.state.comments;
             case mutations.ADD_ITEM_COMMENT:
                 let { owner, item, content, id } = action;
                 return [...comments, { owner, item, content, id }];
-            case mutations.SET_STATE:
-                return action.state.comments;
         }
         return comments;
     }
@@ -214,6 +214,12 @@ const sagas = [
             axios.post(`${URL}/add_to`, { item, id, location });
         }
     },
+    function* removeFromCollectionSaga() {
+        while (true) {
+            const { item, id, location } = yield take(mutations.REMOVE_FROM_COLLECTION);
+            axios.post(`${URL}/remove_from`, { item, id, location });
+        }
+    }
 ];
 
 export const history = createBrowserHistory();
