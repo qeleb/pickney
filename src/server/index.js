@@ -138,7 +138,7 @@ app.post('/item/update', async (req, res) => {
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
-    if (group) await collection_items.updateOne({ id }, { $addToSet: { group: group } }); //TODO: Allow multiselecting categories
+    if (group) await collection_items.updateOne({ id }, { $addToSet: { group: group } }, {multi:true}); //TODO: Allow multiselecting categories
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
@@ -172,11 +172,11 @@ app.post('/add_to', async (req, res) => {
 
 // Route: Remove from Collection (Cart, Favorites)
 app.post('/remove_from', async (req, res) => {
-    let { item, id, location } = req.body;
-    console.log(item, id, location);
+    let { item, id, location } = req.body; //id and item are the same!
+    console.log("********************",item, id, location);
     let collection_users = (await connectDB()).collection('users');
-    if (location === 'cart') //TODO: Make Removing from Cart Work
-        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item, quantity: 1 } } });
+    if (location === 'cart')//TODO: Make Removing from Cart Work
+        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item , quantity: 1} } }); 
     else if (location === 'favorites')
         await collection_users.updateOne({ id: id }, { $pull: { favorites: item } });
     res.status(200).send();
