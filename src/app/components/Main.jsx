@@ -10,7 +10,7 @@ import { ConnectedSignup } from './Signup'
 import { ConnectedCart } from './Cart'
 import { ConnectedFavorites } from './Favorites'
 import { ConnectedPurchased } from './Purchased'
-import { ConnectedBrowse } from './Browse'
+import { ConnectedBrowseAll, ConnectedBrowseBoys, ConnectedBrowseGirls, ConnectedBrowseSale } from './Browse'
 import { ConnectedItemDetail } from './ItemDetail'
 
 // Get Global Styles
@@ -30,7 +30,10 @@ export const Main = () => (
                 <Route exact path="/" component={ConnectedHome} />
                 <Route exact path="/login" component={ConnectedLogin} />
                 <Route exact path="/signup" component={ConnectedSignup} />
-                <Route exact path="/browse" render={RouteGuard(ConnectedBrowse)} />
+                <Route exact path="/browse" render={RouteGuard(ConnectedBrowseAll)} />
+                <Route exact path="/boys" render={RouteGuard(ConnectedBrowseBoys)} />
+                <Route exact path="/girls" render={RouteGuard(ConnectedBrowseGirls)} />
+                <Route exact path="/sale" render={RouteGuard(ConnectedBrowseSale)} />
                 <Route exact path="/cart" render={RouteGuard(ConnectedCart)} />
                 <Route exact path="/favorites" render={RouteGuard(ConnectedFavorites)} />
                 <Route exact path="/purchased" render={RouteGuard(ConnectedPurchased)} />
