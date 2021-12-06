@@ -10,7 +10,7 @@ const Favorites = ({ id, favorites }) => (
     </div>
 );
 
-const mapStateToProps = ( state ) => ({ 
+const mapStateToProps = (state) => ({ 
     id: state.user.id,
     favorites: state.user.favorites
  });
