@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { history } from '../store';
 import { v4 as uuid } from 'uuid';
@@ -86,9 +85,9 @@ const ItemDetail = ({
                 <hr />
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                     {/* Show Which Items are Already in Cart or Favorites and Don't Allow them to be added again */}
-                    <button className="btn btn-warning" style={{maxWidth: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                    <button className="btn btn-secondary" style={{maxWidth: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
-                    <button className="btn btn-primary" style={{maxWidth: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
+                    <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
+                    <button className="btn btn-secondary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
                 </div>
             </div>
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
 
 const Cart = ({ cart }) => (
-    <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
+    <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-3 col-8" style={{ backgroundColor: '#121212'}}>
             <h1>cart</h1>
             <table className="table">
@@ -26,6 +27,10 @@ const Cart = ({ cart }) => (
                 ))}
                 </tbody>
             </table>
+            <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
+                <button className="btn btn-primary" style={{width: '40%'}}><i className="bi bi-star"></i>&nbsp;checkout</button>
+            </div>
         </div>
     </div>
 )
