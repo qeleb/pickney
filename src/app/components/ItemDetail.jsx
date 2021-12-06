@@ -42,7 +42,7 @@ const ItemDetail = ({
                         <h1>product editor</h1>
                         <hr />
                         <div className="input-group mt-3">
-                            <p className="me-4">name</p>
+                            <p className="4">name</p>
                             <input type="text" value={item.name} onChange={setItemName} className="form-control form-control-lg" />
                             <button className="btn btn-secondary" onClick={() => setItemHidden(id, !item.isHidden)}>{item.isHidden ? 'show' : 'hide'}</button>
                             <button className="btn btn-danger" onClick={() => setItemDeleted(id, !item.isDeleted)}>{item.isDeleted ? 'undelete' : 'delete'}</button>
@@ -103,7 +103,7 @@ const ItemDetail = ({
                 <hr />
                 <div className="list-group p-3 pt-0" style={{ border: 'none' }}>
                     {comments.map(comment =>
-                        <li className="list-group-item ms-5 me-5 mt-1" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
+                        <li className="list-group-item mx-5 mt-1" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
                 </div>
                 <form className="input-group p-3 ps-0" onSubmit={(e) => addItemComment(id, sessionID, e)}>
                     <p className="me-4">post a comment</p>
