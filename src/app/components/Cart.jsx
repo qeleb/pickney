@@ -18,10 +18,10 @@ const Cart = ({ cart }) => (
                 </thead>
                 <tbody>
                 {cart.map((item, i) => (
-                    <tr scope="row" key={item}>
+                    <tr scope="row" key={item.id}>
                         <th>{i + 1}.</th>
-                        <th><ConnectedItemListItem {...{id: item}} /></th>
-                        <th>0</th>
+                        <th><ConnectedItemListItem {...{id: item.id}} /></th>
+                        <th>{item.quantity}</th>
                         <th><button className="btn btn-danger">Remove</button></th>
                     </tr>
                 ))}

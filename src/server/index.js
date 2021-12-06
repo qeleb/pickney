@@ -164,7 +164,7 @@ app.post('/add_to', async (req, res) => {
     let { item, id, location } = req.body;
     let collection_users = (await connectDB()).collection('users');
     if (location === 'cart')
-        await collection_users.updateOne({ id: id }, { $addToSet: { cart: item } });
+        await collection_users.updateOne({ id: id }, { $addToSet: { cart: { id: item, quantity: 1 } } });
     else if (location === 'favorites')
         await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
     res.status(200).send();
