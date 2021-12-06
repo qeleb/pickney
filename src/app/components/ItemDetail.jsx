@@ -62,17 +62,10 @@ const ItemDetail = ({
                         */}
                         <span className="me-4">category</span>
                         <ul style={{listStyleType:"none"}}>
-                            {groups.map(group => <li key={group.id}><input type="checkbox" value={group.id} onChange={setItemGroup}/>{group.name}</li>)}
+                            {groups.map(group => <li key={group.id} style={{display:"inline"}} className="px-3">
+                                <input type="checkbox" value={group.name} checked={groups.map(group =>(group.id).includes(item.group))} onChange={setItemGroup}/>
+                            {group.name}</li>)}
                         </ul>
-                          {/* 
-                        <input 
-                            name="category"
-                            type="checkbox"
-                            value={groups.map(group => group.name), item.group}
-                            checked={groups.map(group => group.name).includes(item.group)}
-                            onChange={setItemGroup}
-                        />
-                             */}
                         </form>
 
                         <div className="input-group pt-3 pb-0">

@@ -63,7 +63,8 @@ const reducer = combineReducers({
                 });
             case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
+                    let { group } = action;
+                    return (item.id === action.itemID) ? { ...item.group, group } : item;
                 });
             case mutations.SET_ITEM_INVENTORY:
                 return items.map(item => {

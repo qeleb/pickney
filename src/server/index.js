@@ -138,7 +138,7 @@ app.post('/item/update', async (req, res) => {
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
-    if (group) await collection_items.updateOne({ id }, { $set: { group: [group] } }); //TODO: Allow multiselecting categories
+    if (group) await collection_items.updateOne({ id }, { $addToSet: { group: group } }); //TODO: Allow multiselecting categories
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
