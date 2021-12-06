@@ -55,7 +55,7 @@ const ItemDetail = ({
                         </div>
 
                         <form className="input-group pt-3 pb-0">
-                        {/* 
+                        {/* TODO: Remove this Comment
                             <select onChange={setItemGroup} className="form-control">
                             <option key='default' value={null}>keep current category</option>
                             {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
