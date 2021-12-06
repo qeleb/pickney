@@ -13,6 +13,7 @@ import {
     setItemHidden,
     setItemDeleted,
     addItemComment,
+    addToFavorites,
 } from '../store/mutations'
 
 /* Automatically calls the REST API [via a mutation] to update the server on every change. */
@@ -31,7 +32,8 @@ const ItemDetail = ({
     setItemImg,
     setItemHidden,
     setItemDeleted,
-    addItemComment
+    addItemComment,
+    addToFavorites
 }) => {
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
@@ -85,7 +87,7 @@ const ItemDetail = ({
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                     <button className="btn btn-warning" style={{maxWidth: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
                     {/*TODO: Add Item to Favorites*/}
-                    <button className="btn btn-secondary" style={{maxWidth: '20%'}}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    <button className="btn btn-secondary" style={{maxWidth: '20%'}} onClick={(e)=>(addToFavorites(sessionID,id))}><i className="bi bi-star"></i>&nbsp;favorite</button>
                     {/*TODO: Add Item to Cart*/}
                     <button className="btn btn-primary" style={{maxWidth: '20%'}}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
                 </div>
@@ -132,6 +134,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         setItemImg(e) { dispatch(setItemImg(id, e.target.files[0] || e.dataTransfer.files[0])); },
         setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
         setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },
+        addToFavorites(ownerID, itemID) { dispatch(addToFavorites(ownerID, itemID)); },
         addItemComment(itemID, ownerID, e) {
             e.preventDefault();
             let input = e.target['commentContents'];

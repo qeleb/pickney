@@ -37,6 +37,10 @@ const reducer = combineReducers({
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.user;
+            case mutations.ADD_TO_FAVORITES:
+                let { item } = action;
+                return { ...user, favorites: [...user.favorites, {item}] };
+                // return { ...user, favorites: [...user.favorites, action.itemID] };
         }
         return user;
     },
@@ -200,6 +204,12 @@ const sagas = [
             const comment = yield take(mutations.ADD_ITEM_COMMENT);
             if (comment.type) delete comment.type;
             axios.post(`${URL}/comment/new`, { comment })
+        }
+    },
+    function* addToFavoritesSaga() {
+        while (true) {
+            const { itemID, userID } = yield take(mutations.ADD_TO_FAVORITES);
+            axios.post(`${URL}/add_fav`, { itemID, userID });
         }
     }
 ];

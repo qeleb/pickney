@@ -9,6 +9,7 @@ export const SET_ITEM_INVENTORY = 'SET_ITEM_INVENTORY';
 export const SET_ITEM_HIDDEN = 'SET_ITEM_HIDDEN';
 export const SET_ITEM_DELETED = 'SET_ITEM_DELETED';
 export const ADD_ITEM_COMMENT = 'ADD_ITEM_COMMENT';
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
 
 export const REQUEST_USER_ACCOUNT_CREATE = 'REQUEST_USER_ACCOUNT_CREATE';
 export const REQUEST_AUTHENTICATE_USER = 'REQUEST_AUTHENTICATE_USER';
@@ -81,6 +82,13 @@ export const addItemComment = (commentID, itemID, ownerID, content) => ({
     item: itemID,
     owner: ownerID,
     content
+});
+
+export const addToFavorites = (ownerID, itemID) => ({
+    type: ADD_TO_FAVORITES,
+    item: itemID,
+    id: ownerID
+    
 });
 
 export const requestCreateUserAccount = (username, password) => ({

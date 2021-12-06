@@ -1,15 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { ConnectedItemList } from './ItemList';
+import { ConnectedItemListItem } from './ItemListItem';
 
-const Favorites = ({ groups }) => (
+const Favorites = ({ name, favorites }) => (
     <>
-        {groups.filter(group => group.name === 'favorites').map(group => (
-            <ConnectedItemList key={group.id} {...group} />
-        ))}
+        <div className="p-2 m-2">
+            <h2>{name}'s favorites</h2>
+            {favorites.map(item => (<ConnectedItemListItem {...item} key={item.id} />))}
+        </div>
     </>
 );
 
-const mapStateToProps = ({ groups }) => ({ groups });
+const mapStateToProps = ( state ) => ({ 
+    favorites: state.user.favorites,
+    name: state.user.name
+ });
 
 export const ConnectedFavorites = connect(mapStateToProps)(Favorites);
