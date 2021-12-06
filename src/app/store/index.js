@@ -181,7 +181,7 @@ const sagas = [
                     id: item.itemID,
                     name: item.name,
                     desc: item.desc,
-                    group: item.groupID, // TODO: Allow for group removal
+                    group: item.groupID,
                     inventory: item.inventory,
                     isHidden: item.isHidden,
                     isDeleted: item.isDeleted
