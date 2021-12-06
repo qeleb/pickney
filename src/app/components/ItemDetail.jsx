@@ -55,11 +55,25 @@ const ItemDetail = ({
                         </div>
 
                         <form className="input-group pt-3 pb-0">
-                            <span className="me-4">category</span>
+                        {/* 
                             <select onChange={setItemGroup} className="form-control">
-                                <option key='default' value={null}>keep current category</option>
-                                {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+                            <option key='default' value={null}>keep current category</option>
+                            {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
                             </select>
+                        */}
+                        <span className="me-4">category</span>
+                        <ul onChange={setItemGroup}>
+                            {groups.map(group => <li key={group.id}><input type="checkbox" value={group.name}/>{group.name}</li>)}
+                        </ul>
+                          {/* 
+                        <input 
+                            name="category"
+                            type="checkbox"
+                            value={groups.map(group => group.name), item.group}
+                            checked={groups.map(group => group.name).includes(item.group)}
+                            onChange={setItemGroup}
+                        />
+                             */}
                         </form>
 
                         <div className="input-group pt-3 pb-0">
