@@ -10,6 +10,7 @@ export const SET_ITEM_HIDDEN = 'SET_ITEM_HIDDEN';
 export const SET_ITEM_DELETED = 'SET_ITEM_DELETED';
 export const ADD_ITEM_COMMENT = 'ADD_ITEM_COMMENT';
 export const ADD_TO_COLLECTION = 'ADD_TO_COLLECTION';
+export const REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION';
 
 export const REQUEST_USER_ACCOUNT_CREATE = 'REQUEST_USER_ACCOUNT_CREATE';
 export const REQUEST_AUTHENTICATE_USER = 'REQUEST_AUTHENTICATE_USER';
@@ -86,6 +87,13 @@ export const addItemComment = (commentID, itemID, ownerID, content) => ({
 
 export const addToCollection = (ownerID, itemID, location) => ({
     type: ADD_TO_COLLECTION,
+    item: itemID,
+    id: ownerID,
+    location: location
+});
+
+export const removeFromCollection = (ownerID, itemID, location) => ({
+    type: REMOVE_FROM_COLLECTION,
     item: itemID,
     id: ownerID,
     location: location

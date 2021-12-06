@@ -169,3 +169,15 @@ app.post('/add_to', async (req, res) => {
         await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
     res.status(200).send();
 });
+
+// Route: Remove from Collection (Cart, Favorites)
+app.post('/remove_from', async (req, res) => {
+    let { item, id, location } = req.body;
+    console.log(item, id, location);
+    let collection_users = (await connectDB()).collection('users');
+    if (location === 'cart') //TODO: Make Removing from Cart Work
+        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item, quantity: 1 } } });
+    else if (location === 'favorites')
+        await collection_users.updateOne({ id: id }, { $pull: { favorites: item } });
+    res.status(200).send();
+});

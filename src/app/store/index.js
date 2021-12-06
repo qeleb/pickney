@@ -41,7 +41,7 @@ const reducer = combineReducers({
                 let { item } = action;
                 if (action.location === 'favorites')
                     return { ...user, favorites: [...user.favorites, item] };
-                return { ...user, cart: [...user.cart, item] }; // Else Add to Cart
+                return { ...user, cart: [...user.cart, { id: item, quantity: 1 } ] }; // Else Add to Cart
         }
         return user;
     },
@@ -213,6 +213,12 @@ const sagas = [
             axios.post(`${URL}/add_to`, { item, id, location });
         }
     },
+    function* removeFromCollectionSaga() {
+        while (true) {
+            const { item, id, location } = yield take(mutations.REMOVE_FROM_COLLECTION);
+            axios.post(`${URL}/remove_from`, { item, id, location });
+        }
+    }
 ];
 
 export const history = createBrowserHistory();
