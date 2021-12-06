@@ -37,6 +37,7 @@ const ItemDetail = ({
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
             <div className="card p-4">
+            {console.log(item)}
                 {isAdmin ?
                     <>
                         <h1>product editor</h1>
@@ -63,7 +64,7 @@ const ItemDetail = ({
                         <span className="me-4">category</span>
                         <ul style={{listStyleType:"none"}}>
                             {groups.map(group => <li key={group.id} style={{display:"inline"}} className="px-3">
-                                <input type="checkbox" value={group.name} checked={groups.map(group =>(group.id).includes(item.group))} onChange={setItemGroup}/>
+                                <input type="checkbox" value={group.id} checked={(item.group).includes(group.id)} onChange={setItemGroup}/>
                             {group.name}</li>)}
                         </ul>
                         </form>
