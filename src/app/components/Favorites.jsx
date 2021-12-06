@@ -5,7 +5,7 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 const Favorites = ({ id, favorites }) => (
     <div className="p-2 m-2">
-        <h2><ConnectedUsernameDisplay id={id} />'s favorites</h2>
+        <h1 className="mt-2 mb-3"><ConnectedUsernameDisplay id={id} />'s favorites</h1>
         {favorites.map(item => (<ConnectedItemListItem {...{id: item}} key={item} />))}
     </div>
 );

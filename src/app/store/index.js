@@ -21,7 +21,7 @@ const DEFAULT_STATE = {
 // State Management
 const reducer = combineReducers({
     session(userSession = DEFAULT_STATE.session, action) {
-        let { type, authenticated, session } = action;
+        let { type, authenticated } = action;
         switch (type) {
             case mutations.SET_STATE:
                 return { ...userSession, id: action.state.session.id };
@@ -99,11 +99,11 @@ const reducer = combineReducers({
     },
     comments: (comments = DEFAULT_STATE.comments, action) => {
         switch (action.type) {
+            case mutations.SET_STATE:
+                return action.state.comments;
             case mutations.ADD_ITEM_COMMENT:
                 let { owner, item, content, id } = action;
                 return [...comments, { owner, item, content, id }];
-            case mutations.SET_STATE:
-                return action.state.comments;
         }
         return comments;
     }
