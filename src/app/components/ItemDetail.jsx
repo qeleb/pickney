@@ -37,6 +37,7 @@ const ItemDetail = ({
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
             <div className="card p-4">
+            {console.log(item)}
                 {isAdmin ?
                     <>
                         <h1>product editor</h1>
@@ -54,11 +55,18 @@ const ItemDetail = ({
                         </div>
 
                         <form className="input-group pt-3 pb-0">
-                            <span className="me-4">category</span>
+                        {/* 
                             <select onChange={setItemGroup} className="form-control">
-                                <option key='default' value={null}>keep current category</option>
-                                {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
+                            <option key='default' value={null}>keep current category</option>
+                            {groups.map(group => <option key={group.id} value={group.id}>{group.name}</option>)}
                             </select>
+                        */}
+                        <span className="me-4">category</span>
+                        <ul style={{listStyleType:"none"}}>
+                            {groups.map(group => <li key={group.id} style={{display:"inline"}} className="px-3">
+                                <input type="checkbox" value={group.id} checked={(item.group).includes(group.id)} onChange={setItemGroup}/>
+                            {group.name}</li>)}
+                        </ul>
                         </form>
 
                         <div className="input-group pt-3 pb-0">
