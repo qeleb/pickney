@@ -4,8 +4,8 @@ import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
 
 const Cart = ({ cart }) => (
-    <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
-        <div className="card p-3 col-8" style={{ backgroundColor: '#121212'}}>
+    <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
+        <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
             <h1>cart</h1>
             <table className="table">
                 <thead>
