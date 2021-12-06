@@ -24,7 +24,8 @@ const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
                             <th>{i + 1}.</th>
                             <th><ConnectedItemListItem {...{id: item.id}} /></th>
                             <th>{item.quantity}</th>
-                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(sessionID, id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
+                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(sessionID, item.id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
+                            {console.log("*******", item.id)}
                         </tr>
                     ))}
                     </tbody>
