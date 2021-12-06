@@ -41,7 +41,7 @@ const reducer = combineReducers({
                 let { item } = action;
                 if (action.location === 'favorites')
                     return { ...user, favorites: [...user.favorites, item] };
-                return { ...user, cart: [...user.favorites, item] }; // Else Add to Cart
+                return { ...user, cart: [...user.cart, item] }; // Else Add to Cart
         }
         return user;
     },
