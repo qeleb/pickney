@@ -7,7 +7,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
     <div className="mt-5" style={{display: 'flex', justifyContent: 'center'}}>
         <div className="card p-3 col-6">
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <h1>log in</h1>
+                <h1><i className="bi bi-person"></i>&nbsp;log in</h1>
                 <Link to="signup" className='h4'>sign up<i className="bi bi-person-plus ms-2"></i></Link>
             </div>
             <form onSubmit={authenticateUser}>
@@ -17,7 +17,7 @@ const LoginComponent = ({ authenticateUser, authenticated }) => (
                 <input type="password" placeholder="password" name="password" className="form-control mt-1 mb-4" />
                 {authenticated === mutations.NOT_AUTHENTICATED ? <p>username or password is incorrect</p> : null}
                 <button type="submit" disabled={authenticated === 'PROCESSING'} className="form-control mt-2 btn btn-primary">
-                    log in
+                    <i className="bi bi-person"></i>&nbsp;log in
                 </button>
             </form>
         </div>

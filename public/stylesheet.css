@@ -141,3 +141,8 @@ a:hover {
 .list-group-item {
   background-color: #3DCCA5;
 }
+
+/* Table */
+.table {
+  color: white;
+}

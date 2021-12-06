@@ -10,6 +10,7 @@ const Browse = ({ groups }) => (
     </div>
 );
 
-const mapStateToProps = ({ groups }) => ({ groups });
-
-export const ConnectedBrowse = connect(mapStateToProps)(Browse);
+export const ConnectedBrowseAll = connect(({ groups }) => ({ groups }))(Browse);
+export const ConnectedBrowseBoys = connect(({ groups }) => ({ groups: groups.filter(group => group.name==='boys') }))(Browse);
+export const ConnectedBrowseGirls = connect(({ groups }) => ({ groups: groups.filter(group => group.name==='girls') }))(Browse);
+export const ConnectedBrowseSale = connect(({ groups }) => ({ groups: groups.filter(group => group.name==='sale') }))(Browse);

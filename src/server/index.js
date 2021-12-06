@@ -138,10 +138,7 @@ app.post('/item/update', async (req, res) => {
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
-    if (group) await collection_items.updateOne({ id }, { $set: { group } }); //TODO: Allow multiselecting categories
-    if (cart) await collection_items.updateOne({ id }, { $set: { cart } }); //TODO: Finish Cart
-    if (favorites) await collection_items.updateOne({ id }, { $set: { favorites } }); //TODO: Finish Favorites
-    if (purchased) await collection_items.updateOne({ id }, { $set: { purchased } }); //TODO: Finish Purchased
+    if (group) await collection_items.updateOne({ id }, { $addToSet: { group: group } }); //TODO: Allow multiselecting categories
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
@@ -159,5 +156,28 @@ app.post('/item/update_img', upload.single('img'), async (req, res) => {
 // Route: Comment on an Item
 app.post('/comment/new', async (req, res) => {
     await (await connectDB()).collection('comments').insertOne(req.body.comment)
+    res.status(200).send();
+});
+
+// Route: Add to Collection (Cart, Favorites)
+app.post('/add_to', async (req, res) => {
+    let { item, id, location } = req.body;
+    let collection_users = (await connectDB()).collection('users');
+    if (location === 'cart')
+        await collection_users.updateOne({ id: id }, { $addToSet: { cart: { id: item, quantity: 1 } } });
+    else if (location === 'favorites')
+        await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
+    res.status(200).send();
+});
+
+// Route: Remove from Collection (Cart, Favorites)
+app.post('/remove_from', async (req, res) => {
+    let { item, id, location } = req.body;
+    console.log(item, id, location);
+    let collection_users = (await connectDB()).collection('users');
+    if (location === 'cart') //TODO: Make Removing from Cart Work
+        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item, quantity: 1 } } });
+    else if (location === 'favorites')
+        await collection_users.updateOne({ id: id }, { $pull: { favorites: item } });
     res.status(200).send();
 });

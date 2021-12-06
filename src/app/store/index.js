@@ -21,7 +21,7 @@ const DEFAULT_STATE = {
 // State Management
 const reducer = combineReducers({
     session(userSession = DEFAULT_STATE.session, action) {
-        let { type, authenticated, session } = action;
+        let { type, authenticated } = action;
         switch (type) {
             case mutations.SET_STATE:
                 return { ...userSession, id: action.state.session.id };
@@ -37,6 +37,11 @@ const reducer = combineReducers({
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.user;
+            case mutations.ADD_TO_COLLECTION:
+                let { item } = action;
+                if (action.location === 'favorites')
+                    return { ...user, favorites: [...user.favorites, item] };
+                return { ...user, cart: [...user.cart, { id: item, quantity: 1 } ] }; // Else Add to Cart
         }
         return user;
     },
@@ -58,7 +63,8 @@ const reducer = combineReducers({
                 });
             case mutations.SET_ITEM_GROUP:
                 return items.map(item => {
-                    return (item.id === action.itemID) ? { ...item, group: action.groupID } : item;
+                    let { group } = action;
+                    return (item.id === action.itemID) ? { ...item.group, group } : item;
                 });
             case mutations.SET_ITEM_INVENTORY:
                 return items.map(item => {
@@ -94,11 +100,11 @@ const reducer = combineReducers({
     },
     comments: (comments = DEFAULT_STATE.comments, action) => {
         switch (action.type) {
-            case mutations.ADD_ITEM_COMMENT:
-                let { type, owner, item, content, id } = action;
-                return [...comments, { owner, item, content, id }];
             case mutations.SET_STATE:
                 return action.state.comments;
+            case mutations.ADD_ITEM_COMMENT:
+                let { owner, item, content, id } = action;
+                return [...comments, { owner, item, content, id }];
         }
         return comments;
     }
@@ -176,7 +182,7 @@ const sagas = [
                     id: item.itemID,
                     name: item.name,
                     desc: item.desc,
-                    group: item.groupID, // TODO: Allow for group removal
+                    group: item.groupID,
                     inventory: item.inventory,
                     isHidden: item.isHidden,
                     isDeleted: item.isDeleted
@@ -200,6 +206,18 @@ const sagas = [
             const comment = yield take(mutations.ADD_ITEM_COMMENT);
             if (comment.type) delete comment.type;
             axios.post(`${URL}/comment/new`, { comment })
+        }
+    },
+    function* addToCollectionSaga() {
+        while (true) {
+            const { item, id, location } = yield take(mutations.ADD_TO_COLLECTION);
+            axios.post(`${URL}/add_to`, { item, id, location });
+        }
+    },
+    function* removeFromCollectionSaga() {
+        while (true) {
+            const { item, id, location } = yield take(mutations.REMOVE_FROM_COLLECTION);
+            axios.post(`${URL}/remove_from`, { item, id, location });
         }
     }
 ];

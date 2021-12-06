@@ -17,6 +17,9 @@ const Navigation = ({ id, authenticated, logout }) => (
                 {authenticated ?
                     <>
                         <Link to="/browse" className="h3">browse</Link>
+                        <Link to="/boys" className="h3">boys</Link>
+                        <Link to="/girls" className="h3">girls</Link>
+                        <Link to="/sale" className="h3">sale</Link>
                         <span style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <Link to="/cart" className="h2 m-0 me-5"><i className="bi bi-cart-fill"></i></Link>
 
