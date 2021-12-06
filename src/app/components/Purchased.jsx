@@ -6,7 +6,7 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 const Purchased = ({ id, purchased }) => (
     <div className="p-2 m-2">
         <h2><ConnectedUsernameDisplay id={id} />'s purchased items</h2>
-        {purchased.map(item => (<ConnectedItemListItem {...item} key={item.id} />))}
+        {purchased.map(item => (<ConnectedItemListItem {...{id: item}} key={item} />))}
     </div>
 );
 

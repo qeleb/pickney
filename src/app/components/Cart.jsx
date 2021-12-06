@@ -6,7 +6,7 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 const Cart = ({ id, cart }) => (
     <div className="p-2 m-2">
         <h2><ConnectedUsernameDisplay id={id} />'s cart</h2>
-        {cart.map(item => (<ConnectedItemListItem {...item} key={item.id} />))}
+        {cart.map(item => (<ConnectedItemListItem {...{id: item}} key={item} />))}
     </div>
 )
 

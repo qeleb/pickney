@@ -37,10 +37,11 @@ const reducer = combineReducers({
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.user;
-            case mutations.ADD_TO_FAVORITES:
+            case mutations.ADD_TO_COLLECTION:
                 let { item } = action;
-                return { ...user, favorites: [...user.favorites, {item}] };
-                // return { ...user, favorites: [...user.favorites, action.itemID] };
+                if (action.location === 'favorites')
+                    return { ...user, favorites: [...user.favorites, item] };
+                return { ...user, cart: [...user.favorites, item] }; // Else Add to Cart
         }
         return user;
     },
@@ -99,7 +100,7 @@ const reducer = combineReducers({
     comments: (comments = DEFAULT_STATE.comments, action) => {
         switch (action.type) {
             case mutations.ADD_ITEM_COMMENT:
-                let { type, owner, item, content, id } = action;
+                let { owner, item, content, id } = action;
                 return [...comments, { owner, item, content, id }];
             case mutations.SET_STATE:
                 return action.state.comments;
@@ -206,12 +207,12 @@ const sagas = [
             axios.post(`${URL}/comment/new`, { comment })
         }
     },
-    function* addToFavoritesSaga() {
+    function* addToCollectionSaga() {
         while (true) {
-            const { item, id } = yield take(mutations.ADD_TO_FAVORITES);
-            axios.post(`${URL}/add_fav`, { item, id });
+            const { item, id, location } = yield take(mutations.ADD_TO_COLLECTION);
+            axios.post(`${URL}/add_to`, { item, id, location });
         }
-    }
+    },
 ];
 
 export const history = createBrowserHistory();

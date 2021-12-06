@@ -13,7 +13,7 @@ import {
     setItemHidden,
     setItemDeleted,
     addItemComment,
-    addToFavorites,
+    addToCollection
 } from '../store/mutations'
 
 /* Automatically calls the REST API [via a mutation] to update the server on every change. */
@@ -33,7 +33,7 @@ const ItemDetail = ({
     setItemHidden,
     setItemDeleted,
     addItemComment,
-    addToFavorites
+    addToCollection
 }) => {
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
@@ -85,11 +85,10 @@ const ItemDetail = ({
                 }
                 <hr />
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                    {/* Show Which Items are Already in Cart or Favorites and Don't Allow them to be added again */}
                     <button className="btn btn-warning" style={{maxWidth: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                    {/*TODO: Add Item to Favorites*/}
-                    <button className="btn btn-secondary" style={{maxWidth: '20%'}} onClick={(e)=>(addToFavorites(sessionID,id))}><i className="bi bi-star"></i>&nbsp;favorite</button>
-                    {/*TODO: Add Item to Cart*/}
-                    <button className="btn btn-primary" style={{maxWidth: '20%'}}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
+                    <button className="btn btn-secondary" style={{maxWidth: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    <button className="btn btn-primary" style={{maxWidth: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart"></i>&nbsp;add to cart</button>
                 </div>
             </div>
 
@@ -134,7 +133,7 @@ function mapDispatchToProps(dispatch, ownProps) {
         setItemImg(e) { dispatch(setItemImg(id, e.target.files[0] || e.dataTransfer.files[0])); },
         setItemHidden(id, isHidden) { dispatch(setItemHidden(id, isHidden)); },
         setItemDeleted(id, isDeleted) { dispatch(setItemDeleted(id, isDeleted)); },
-        addToFavorites(ownerID, itemID) { dispatch(addToFavorites(ownerID, itemID)); },
+        addToCollection(ownerID, itemID, location) { dispatch(addToCollection(ownerID, itemID, location)); },
         addItemComment(itemID, ownerID, e) {
             e.preventDefault();
             let input = e.target['commentContents'];

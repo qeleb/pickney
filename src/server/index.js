@@ -159,10 +159,13 @@ app.post('/comment/new', async (req, res) => {
     res.status(200).send();
 });
 
-// Route: Add to Favorites
-app.post('/add_fav', async (req, res) => {
-    let { item, id} = req.body;
+// Route: Add to Collection (Cart, Favorites)
+app.post('/add_to', async (req, res) => {
+    let { item, id, location } = req.body;
     let collection_users = (await connectDB()).collection('users');
-    await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
+    if (location === 'cart')
+        await collection_users.updateOne({ id: id }, { $addToSet: { cart: item } });
+    else if (location === 'favorites')
+        await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
     res.status(200).send();
 });
