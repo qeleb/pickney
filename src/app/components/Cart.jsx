@@ -1,27 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ConnectedItemList } from './ItemList';
 import { ConnectedItemListItem } from './ItemListItem';
-import { ConnectedUsernameDisplay } from './UsernameDisplay';
+import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
-
-const Cart = ({ name, cart }) => (
-    <>  
-        <div className="p-2 m-2">
-            <h2>{name}'s cart</h2>
-                {cart.map(item => (<ConnectedItemListItem {...item} key={item.id} />))}
-
-        </div>
-        
-
-    </>
+const Cart = ({ id, cart }) => (
+    <div className="p-2 m-2">
+        <h2><ConnectedUsernameDisplay id={id} />'s cart</h2>
+        {cart.map(item => (<ConnectedItemListItem {...item} key={item.id} />))}
+    </div>
 )
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
+    id: state.user.id,
     cart: state.user.cart,
-    name: state.user.name,
-
-
  });
 
 export const ConnectedCart = connect(mapStateToProps)(Cart);

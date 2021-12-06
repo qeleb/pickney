@@ -136,13 +136,9 @@ app.post('/item/update', async (req, res) => {
     
     let { id, name, desc, group, inventory, isHidden, isDeleted } = req.body.item;
     let collection_items = (await connectDB()).collection('items');
-    let collection_users = (await connectDB()).collection('users');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
     if (group) await collection_items.updateOne({ id }, { $set: { group } }); //TODO: Allow multiselecting categories
-    // if (cart) await collection_items.updateOne({ id }, { $set: { cart } }); //TODO: Finish Cart
-    // if (favorites) await collection_users.updateOne({ id }, { $set: { favorites:  } }); //TODO: Finish Favorites
-    // if (purchased) await collection_items.updateOne({ id }, { $set: { purchased } }); //TODO: Finish Purchased
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });
     if (isDeleted !== undefined) await collection_items.updateOne({ id }, { $set: { isDeleted } });
@@ -165,8 +161,8 @@ app.post('/comment/new', async (req, res) => {
 
 // Route: Add to Favorites
 app.post('/add_fav', async (req, res) => {
-    let { user_id, item_id} = req.body;
+    let { item, id} = req.body;
     let collection_users = (await connectDB()).collection('users');
-    await collection_users.updateOne({ id: user_id }, { $addToSet: { favorites: item_id } });
+    await collection_users.updateOne({ id: id }, { $addToSet: { favorites: item } });
     res.status(200).send();
 });

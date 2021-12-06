@@ -208,8 +208,8 @@ const sagas = [
     },
     function* addToFavoritesSaga() {
         while (true) {
-            const { itemID, userID } = yield take(mutations.ADD_TO_FAVORITES);
-            axios.post(`${URL}/add_fav`, { itemID, userID });
+            const { item, id } = yield take(mutations.ADD_TO_FAVORITES);
+            axios.post(`${URL}/add_fav`, { item, id });
         }
     }
 ];

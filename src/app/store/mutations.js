@@ -88,7 +88,6 @@ export const addToFavorites = (ownerID, itemID) => ({
     type: ADD_TO_FAVORITES,
     item: itemID,
     id: ownerID
-    
 });
 
 export const requestCreateUserAccount = (username, password) => ({
