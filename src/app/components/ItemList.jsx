@@ -25,7 +25,7 @@ const ItemListPages = ({ name, items, id, isAdmin, createNewItem, searchItems })
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
             <div className="input-group mt-3">
-                <input type="text" onChange={searchItems} className="form-control form-control-lg" />
+                <input type="text" onChange={searchItems} placeholder="search" className="form-control form-control-lg" />
             </div>
             <ItemList name={name} items={currentItems} id={id} isAdmin={isAdmin} createNewItem={createNewItem} />
             <ReactPaginate
