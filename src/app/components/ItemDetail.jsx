@@ -42,7 +42,6 @@ const ItemDetail = ({
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
             <div className="card p-4">
-            {console.log(item)}
                 {isAdmin ?
                     <>
                         <h1>product editor</h1>
