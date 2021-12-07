@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
-import { removeFromCollection, checkout } from '../store/mutations'
+import { setCartItemQuantity, removeFromCollection, checkout } from '../store/mutations'
 
-const Cart = ({ state, cart, total, removeFromCollection, checkout }) => (
+const Cart = ({ state, cart, total, setCartItemQuantity, removeFromCollection, checkout }) => (
     <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
-                <h3>total: ${total}</h3>
+                <h3>{!total && total != 0 ? `` : `total: $${total}`}</h3> {/*TODO: Fix Setting Quantity to Fix Total */}
             </div>
             {cart.length > 0 ?
                 <table className="table">
@@ -28,7 +28,7 @@ const Cart = ({ state, cart, total, removeFromCollection, checkout }) => (
                             <th>{i + 1}.</th>
                             <th>${state.items.find(i => i.id === item.id).price}</th>
                             <th><ConnectedItemListItem {...{id: item.id}} /></th>
-                            <th>{item.quantity}</th>
+                            <th><input type="number" value={item.quantity} onChange={(e) => setCartItemQuantity(state.session.id, item.id, e)} className="form-control form-control" /></th>
                             <th><button className="btn btn-danger" onClick={() => removeFromCollection(state.session.id, item.id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
                         </tr>
                     ))}
@@ -52,6 +52,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    setCartItemQuantity: (id, itemID, e) => dispatch(setCartItemQuantity(id, itemID, e.target.value)),
     removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location)),
     checkout: (ownerID, cart) => dispatch(checkout(ownerID, cart))
 });
