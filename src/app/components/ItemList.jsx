@@ -62,4 +62,5 @@ const mapDispatchToProps = (dispatch, { id }) => ({
     createNewItem: () => dispatch(requestItemCreation(id))
 });
 
-export const ConnectedItemList = connect(mapStateToProps, mapDispatchToProps)(ItemListPages);
+export const ConnectedItemList = connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export const ConnectedItemListPages = connect(mapStateToProps, mapDispatchToProps)(ItemListPages);
