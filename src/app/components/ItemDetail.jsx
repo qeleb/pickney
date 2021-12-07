@@ -99,12 +99,12 @@ const ItemDetail = ({
                     <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
                     {user.favorites.includes(id) ?
                         <button className="btn btn-secondary" style={{width: '20%'}} onClick={() => removeFromCollection(sessionID, item.id, 'favorites')}><i className="bi bi-star-half"></i>&nbsp;unfavorite</button>
-                        :
+                    :
                         <button className="btn btn-secondary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
                     }
                     {user.cart.filter(item => item.id === id).length > 0 ?
                         <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>removeFromCollection(sessionID, id, 'cart')}><i className="bi bi-cart-dash"></i>&nbsp;remove from cart</button>
-                        :
+                    :
                         <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart-plus"></i>&nbsp;add to cart</button>
                     }
                 </div>
