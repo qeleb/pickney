@@ -4,7 +4,7 @@ import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
 import { removeFromCollection, checkout } from '../store/mutations'
 
-const Cart = ({ sessionID, cart, removeFromCollection, checkout }) => (
+const Cart = ({ state, cart, removeFromCollection, checkout }) => (
     <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
             <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
@@ -13,6 +13,7 @@ const Cart = ({ sessionID, cart, removeFromCollection, checkout }) => (
                     <thead>
                         <tr>
                             <th scope="col" className="col-1">#</th>
+                            <th scope="col" className="col-1">price</th>
                             <th scope="col">item</th>
                             <th scope="col" className="col-1">quantity</th>
                             <th scope="col" className="col-1">remove</th>
@@ -22,9 +23,10 @@ const Cart = ({ sessionID, cart, removeFromCollection, checkout }) => (
                     {cart.map((item, i) => (
                         <tr scope="row" key={item.id}>
                             <th>{i + 1}.</th>
+                            <th>${state.items.find(i => i.id === item.id).price}</th>
                             <th><ConnectedItemListItem {...{id: item.id}} /></th>
                             <th>{item.quantity}</th>
-                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(sessionID, item.id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
+                            <th><button className="btn btn-danger" onClick={() => removeFromCollection(state.session.id, item.id, 'cart')}><i className="bi bi-x-lg"></i></button></th>
                         </tr>
                     ))}
                     </tbody>
@@ -34,13 +36,13 @@ const Cart = ({ sessionID, cart, removeFromCollection, checkout }) => (
             }
             <div className="mt-5" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                <button className="btn btn-primary" style={{width: '40%'}} onClick={() => checkout(sessionID, cart)}><i className="bi bi-cart-check"></i>&nbsp;checkout</button>
+                <button className="btn btn-primary" style={{width: '40%'}} onClick={() => checkout(state.session.id, cart)}><i className="bi bi-cart-check"></i>&nbsp;checkout</button>
             </div>
         </div>
     </div>
 )
 
-const mapStateToProps = (state) => ({ sessionID: state.session.id, cart: state.user.cart });
+const mapStateToProps = (state) => ({ state: state, cart: state.user.cart });
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location)),
