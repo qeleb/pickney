@@ -47,7 +47,7 @@ const Cart = ({ state, cart, total, removeFromCollection, checkout }) => (
 
 const mapStateToProps = (state) => ({
     state: state,
-    total: state.user.cart.map(i=>i.quantity * state.items.find(j => j.id === i.id).price).reduce((a,b)=>a+b),
+    total: state.user.cart.length < 1 ? 0 : state.user.cart.map(i=>i.quantity * state.items.find(j => j.id === i.id).price).reduce((a,b)=>a+b),
     cart: state.user.cart
 });
 
