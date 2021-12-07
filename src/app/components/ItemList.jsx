@@ -13,7 +13,6 @@ const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
     useEffect(() => {
         // Fetch items from another resources.
         const endOffset = itemOffset + itemsPerPage;
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setItems(items.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(items.length / itemsPerPage));
     }, [itemOffset, itemsPerPage]);
@@ -21,7 +20,6 @@ const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
     // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % items.length;
-        console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
         setItemOffset(newOffset);
     };
     return (
