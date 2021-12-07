@@ -48,6 +48,8 @@ const reducer = combineReducers({
                 if (action.location === 'favorites')
                     return { ...user, favorites: user.favorites.filter(i => i !== item) }; // Remove from Favorites
                 return { ...user, cart: user.cart.filter(i => i.id !== item) }; // Else Cart
+            case mutations.CHECKOUT:
+                return { ...user, purchased: [...user.purchased, ...action.cart.map(item => item.id)], cart: [] };
         }
         return user;
     },
@@ -230,6 +232,12 @@ const sagas = [
         while (true) {
             const { item, id, location } = yield take(mutations.REMOVE_FROM_COLLECTION);
             axios.post(`${URL}/remove_from`, { item, id, location });
+        }
+    },
+    function* checkoutSaga() {
+        while (true) {
+            const { id, cart } = yield take(mutations.CHECKOUT);
+            axios.post(`${URL}/checkout`, { id, cart });
         }
     }
 ];

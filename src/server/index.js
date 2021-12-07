@@ -181,3 +181,16 @@ app.post('/remove_from', async (req, res) => {
         await collection_users.updateOne({ id: id }, { $pull: { favorites: item } });
     res.status(200).send();
 });
+
+// Route: Checkout
+app.post('/checkout', async (req, res) => {
+    let { id, cart } = req.body;
+    let collection_items = (await connectDB()).collection('items');
+    let collection_users = (await connectDB()).collection('users');
+    cart.forEach(async (item) => {
+        await collection_items.updateOne({ id: item.id }, { $inc: { inventory: -1 } });
+        await collection_users.updateOne({ id: id }, { $addToSet: { purchased: item.id } });
+    }); // Subtract inventory & Add to Purchased
+    await collection_users.updateOne({ id: id }, { $set: { cart: [] } }); // Empty the Cart
+    res.status(200).send();
+});

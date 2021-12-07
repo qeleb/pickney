@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
-import { removeFromCollection } from '../store/mutations'
+import { removeFromCollection, checkout } from '../store/mutations'
 
-const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
+const Cart = ({ sessionID, cart, removeFromCollection, checkout }) => (
     <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
             <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
@@ -34,16 +34,17 @@ const Cart = ({ id, sessionID, cart, removeFromCollection }) => (
             }
             <div className="mt-5" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                 <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                <button className="btn btn-primary" style={{width: '40%'}}><i className="bi bi-cart-check"></i>&nbsp;checkout</button>
+                <button className="btn btn-primary" style={{width: '40%'}} onClick={() => checkout(sessionID, cart)}><i className="bi bi-cart-check"></i>&nbsp;checkout</button>
             </div>
         </div>
     </div>
 )
 
-const mapStateToProps = (state) => ({ id: state.user.id, sessionID: state.session.id, cart: state.user.cart });
+const mapStateToProps = (state) => ({ sessionID: state.session.id, cart: state.user.cart });
 
 const mapDispatchToProps = (dispatch) => ({
-    removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location))
+    removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location)),
+    checkout: (ownerID, cart) => dispatch(checkout(ownerID, cart))
 });
 
 export const ConnectedCart = connect(mapStateToProps, mapDispatchToProps)(Cart);

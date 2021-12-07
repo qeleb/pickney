@@ -12,6 +12,7 @@ export const SET_ITEM_DELETED = 'SET_ITEM_DELETED';
 export const ADD_ITEM_COMMENT = 'ADD_ITEM_COMMENT';
 export const ADD_TO_COLLECTION = 'ADD_TO_COLLECTION';
 export const REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION';
+export const CHECKOUT = 'CHECKOUT';
 
 export const REQUEST_USER_ACCOUNT_CREATE = 'REQUEST_USER_ACCOUNT_CREATE';
 export const REQUEST_AUTHENTICATE_USER = 'REQUEST_AUTHENTICATE_USER';
@@ -104,6 +105,12 @@ export const removeFromCollection = (ownerID, itemID, location) => ({
     item: itemID,
     id: ownerID,
     location: location
+});
+
+export const checkout = (ownerID, cart) => ({
+    type: CHECKOUT,
+    id: ownerID,
+    cart: cart,
 });
 
 export const requestCreateUserAccount = (username, password) => ({
