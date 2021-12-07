@@ -86,7 +86,10 @@ const ItemDetail = ({
                     </>
                 :
                     <>
-                        <h1 className="center">{item.name}</h1>
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <h1 className="d-flex inline">{item.name}</h1>
+                        <h4 className="mx-4"> {'price $'}{item.price}</h4>
+                    </div>
                         <hr />
                         <div style={{display: 'flex', justifyContent: 'center'}}>
                             <img src={image_path} style={{width:'100%', maxWidth: '300px'}} alt="missing product image" />
@@ -118,8 +121,7 @@ const ItemDetail = ({
                         <li className="list-group-item mx-5 mt-1" key={comment.id}><ConnectedUsernameDisplay id={comment.owner} />: {comment.content}</li>)}
                 </div>
                 <form className="input-group p-3 ps-0" onSubmit={(e) => addItemComment(id, sessionID, e)}>
-                    <p className="me-4">post a comment</p>
-                    <input type="text" name="commentContents" autoComplete="off" placeholder="comment" className="form-control" />
+                    <input type="text" name="commentContents" autoComplete="off" placeholder="post a comment" className="form-control" />
                     <button type="submit" className="btn btn-primary">post</button>
                 </form>
             </div>
