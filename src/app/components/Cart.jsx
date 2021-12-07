@@ -4,10 +4,13 @@ import { history } from '../store';
 import { ConnectedItemListItem } from './ItemListItem';
 import { removeFromCollection, checkout } from '../store/mutations'
 
-const Cart = ({ state, cart, removeFromCollection, checkout }) => (
+const Cart = ({ state, cart, total, removeFromCollection, checkout }) => (
     <div className="m-5 mb-2" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
         <div className="card p-5 pt-3 pb-4" style={{ backgroundColor: '#121212'}}>
-            <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <h1><i className="bi bi-cart"></i>&nbsp;cart</h1>
+                <h3>total: ${total}</h3>
+            </div>
             {cart.length > 0 ?
                 <table className="table">
                     <thead>
@@ -42,7 +45,11 @@ const Cart = ({ state, cart, removeFromCollection, checkout }) => (
     </div>
 )
 
-const mapStateToProps = (state) => ({ state: state, cart: state.user.cart });
+const mapStateToProps = (state) => ({
+    state: state,
+    total: state.user.cart.map(i=>i.quantity * state.items.find(j => j.id === i.id).price).reduce((a,b)=>a+b),
+    cart: state.user.cart
+});
 
 const mapDispatchToProps = (dispatch) => ({
     removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location)),
