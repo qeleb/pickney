@@ -176,9 +176,18 @@ app.post('/remove_from', async (req, res) => {
     let { item, id, location } = req.body;
     let collection_users = (await connectDB()).collection('users');
     if (location === 'cart')
-        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item, quantity: 1} } });
+        await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item } } });
     else if (location === 'favorites')
         await collection_users.updateOne({ id: id }, { $pull: { favorites: item } });
+    res.status(200).send();
+});
+
+// Route: Change Quantity of Item in Cart
+app.post('/cart_quantity', async (req, res) => {
+    let { id, item, quantity } = req.body;
+    let collection_users = (await connectDB()).collection('users');
+    await collection_users.updateOne({ id: id }, { $pull: { cart: { id: item } } });
+    await collection_users.updateOne({ id: id }, { $addToSet: { cart: { id: item, quantity: quantity } } });
     res.status(200).send();
 });
 
