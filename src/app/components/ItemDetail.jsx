@@ -96,14 +96,17 @@ const ItemDetail = ({
                 }
                 <hr />
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
-                    {/* Show Which Items are Already in Cart or Favorites and Don't Allow them to be added again */}
                     <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
                     {user.favorites.includes(id) ?
-                        <button className="btn btn-secondary" style={{width: '20%'}} onClick={() => removeFromCollection(sessionID, item.id, 'favorites')}><i className="bi bi-star-half"></i>&nbsp;favorite</button>
+                        <button className="btn btn-secondary" style={{width: '20%'}} onClick={() => removeFromCollection(sessionID, item.id, 'favorites')}><i className="bi bi-star-half"></i>&nbsp;unfavorite</button>
                         :
                         <button className="btn btn-secondary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
                     }
-                    <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart-plus"></i>&nbsp;add to cart</button>
+                    {user.cart.filter(item => item.id === id).length > 0 ?
+                        <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>removeFromCollection(sessionID, id, 'cart')}><i className="bi bi-cart-dash"></i>&nbsp;remove from cart</button>
+                        :
+                        <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart-plus"></i>&nbsp;add to cart</button>
+                    }
                 </div>
             </div>
 
