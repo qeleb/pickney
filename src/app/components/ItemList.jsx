@@ -5,7 +5,7 @@ import { requestItemCreation } from '../store/mutations'
 import { ConnectedItemListItem } from './ItemListItem'
 
 const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
-    const itemsPerPage = 2;
+    const itemsPerPage = 3;
     const [currentItems, setItems] = useState(items);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
