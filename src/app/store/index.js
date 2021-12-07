@@ -50,7 +50,6 @@ const reducer = combineReducers({
                 return { ...user, cart: user.cart.filter(i => i.id !== item) }; // Else Cart
             case mutations.SET_CART_ITEM_QUANTITY:
                 item = action.item;
-                console.log('FILTER', user.cart.filter(i => i.id !== item));
                 return { ...user,  cart: [...user.cart.filter(i => i.id !== item), { id: item, quantity: item.quantity } ] };
             case mutations.CHECKOUT:
                 return { ...user, purchased: [...user.purchased, ...action.cart.map(item => item.id)], cart: [] };
@@ -103,7 +102,12 @@ const reducer = combineReducers({
                     inventory: 0,
                     isHidden: false,
                     isDeleted: false
-                }]
+                }];
+            case mutations.SEARCH_ITEMS:
+                const search_items = items.filter(item => String(item.name).toLowerCase().includes(String(action.query).toLowerCase()));
+                console.log('SEARCH RESULTS', search_items);
+                items[0].searchResults = search_items
+                return items;
         }
         return items;
     },

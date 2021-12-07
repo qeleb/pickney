@@ -12,6 +12,9 @@ export const SET_ITEM_DELETED = 'SET_ITEM_DELETED';
 export const ADD_ITEM_COMMENT = 'ADD_ITEM_COMMENT';
 export const ADD_TO_COLLECTION = 'ADD_TO_COLLECTION';
 export const REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION';
+
+export const SEARCH_ITEMS = 'SEARCH_ITEMS';
+
 export const SET_CART_ITEM_QUANTITY = 'SET_CART_ITEM_QUANTITY';
 export const CHECKOUT = 'CHECKOUT';
 
@@ -26,6 +29,11 @@ export const NOT_AUTHENTICATED = 'NOT_AUTHENTICATED';
 
 export const USERNAME_RESERVED = 'USERNAME_RESERVED';
 export const SET_STATE = 'SET_STATE';
+
+export const searchItems = (query) => ({
+    type: SEARCH_ITEMS,
+    query
+});
 
 export const createItem = (itemID, groupID) => ({
     type: CREATE_ITEM,
