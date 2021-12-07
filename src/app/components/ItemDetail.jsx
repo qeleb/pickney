@@ -13,11 +13,13 @@ import {
     setItemHidden,
     setItemDeleted,
     addItemComment,
-    addToCollection
+    addToCollection,
+    removeFromCollection
 } from '../store/mutations'
 
 /* Automatically calls the REST API [via a mutation] to update the server on every change. */
 const ItemDetail = ({
+    user,               // The current user  
     id,                 // ID of Selected Item (For Matching Item Info)
     comments,           // Comments on the Item
     item,               // Item
@@ -34,7 +36,8 @@ const ItemDetail = ({
     setItemHidden,
     setItemDeleted,
     addItemComment,
-    addToCollection
+    addToCollection,
+    removeFromCollection
 }) => {
     return (
         <div className="mt-5" style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
@@ -95,7 +98,11 @@ const ItemDetail = ({
                 <div className="mt-3" style={{display: 'flex', justifyContent: 'space-evenly'}}>
                     {/* Show Which Items are Already in Cart or Favorites and Don't Allow them to be added again */}
                     <button className="btn btn-warning" style={{width: '20%'}} onClick={history.back}><i className="bi bi-arrow-left"></i>&nbsp;go back</button>
-                    <button className="btn btn-secondary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    {user.favorites.includes(id) ?
+                        <button className="btn btn-secondary" style={{width: '20%'}} onClick={() => removeFromCollection(sessionID, item.id, 'favorites')}><i className="bi bi-star-half"></i>&nbsp;favorite</button>
+                        :
+                        <button className="btn btn-secondary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'favorites')}><i className="bi bi-star"></i>&nbsp;favorite</button>
+                    }
                     <button className="btn btn-primary" style={{width: '20%'}} onClick={()=>addToCollection(sessionID, id, 'cart')}><i className="bi bi-cart-plus"></i>&nbsp;add to cart</button>
                 </div>
             </div>
@@ -119,8 +126,10 @@ const ItemDetail = ({
 
 const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.id;
+    let user = state.user;
     let item = state.items.find(item => item.id === id);
     return {
+        user,
         id,
         item: item,
         image_path: item.img ? `${__dirname}public/images/${item.img}` : `${__dirname}public/no-img.png`,
@@ -143,6 +152,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         setItemHidden: (id, isHidden) => dispatch(setItemHidden(id, isHidden)),
         setItemDeleted: (id, isDeleted) => dispatch(setItemDeleted(id, isDeleted)),
         addToCollection: (ownerID, itemID, location) => dispatch(addToCollection(ownerID, itemID, location)),
+        removeFromCollection: (ownerID, itemID, location) => dispatch(removeFromCollection(ownerID, itemID, location)),
         addItemComment: (itemID, ownerID, e) => {
             e.preventDefault();
             let input = e.target['commentContents'];
