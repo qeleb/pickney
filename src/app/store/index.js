@@ -34,14 +34,20 @@ const reducer = combineReducers({
         }
     },
     user: (user = DEFAULT_STATE.user, action) => {
+        let item;
         switch (action.type) {
             case mutations.SET_STATE:
                 return action.state.user;
             case mutations.ADD_TO_COLLECTION:
-                let { item } = action;
+                item = action.item;
                 if (action.location === 'favorites')
-                    return { ...user, favorites: [...user.favorites, item] };
-                return { ...user, cart: [...user.cart, { id: item, quantity: 1 } ] }; // Else Add to Cart
+                    return { ...user, favorites: [...user.favorites, item] }; // Add to Favorites
+                return { ...user, cart: [...user.cart, { id: item, quantity: 1 } ] }; // Else Cart
+            case mutations.REMOVE_FROM_COLLECTION:
+                item = action.item;
+                if (action.location === 'favorites')
+                    return { ...user, favorites: user.favorites.filter(i => i !== item) }; // Remove from Favorites
+                return { ...user, cart: user.cart.filter(i => i.id !== item) }; // Else Cart
         }
         return user;
     },
