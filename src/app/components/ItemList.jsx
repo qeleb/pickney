@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import { requestItemCreation } from '../store/mutations'
+import { requestItemCreation, searchItems } from '../store/mutations'
 import { ConnectedItemListItem } from './ItemListItem'
 
-const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
+const ItemListPages = ({ name, items, id, isAdmin, createNewItem, searchItems }) => {
     const itemsPerPage = 3;
     const [currentItems, setItems] = useState(items);
     const [pageCount, setPageCount] = useState(0);
@@ -24,6 +24,9 @@ const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
     };
     return (
         <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div className="input-group mt-3">
+                <input type="text" onChange={searchItems} className="form-control form-control-lg" />
+            </div>
             <ItemList name={name} items={currentItems} id={id} isAdmin={isAdmin} createNewItem={createNewItem} />
             <ReactPaginate
                 style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}
@@ -53,13 +56,14 @@ export const ItemList = ({ name, items, id, isAdmin, createNewItem }) => (
 
 const mapStateToProps = (state, { name, id }) => ({
     name: name,
-    items: state.items.filter(item => item.group.includes(id)),
+    items: state.items[0].searchResults ? state.items[0].searchResults.filter(item => item.group.includes(id)) : state.items.filter(item => item.group.includes(id)),
     id,
     isAdmin: state.user.isAdmin
 });
 
 const mapDispatchToProps = (dispatch, { id }) => ({
-    createNewItem: () => dispatch(requestItemCreation(id))
+    createNewItem: () => dispatch(requestItemCreation(id)),
+    searchItems: (e) => dispatch(searchItems(e.target.value))
 });
 
 export const ConnectedItemList = connect(mapStateToProps, mapDispatchToProps)(ItemList);
