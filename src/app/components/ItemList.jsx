@@ -27,12 +27,23 @@ const ItemListPages = ({ name, items, id, isAdmin, createNewItem }) => {
             <ItemList name={name} items={currentItems} id={id} isAdmin={isAdmin} createNewItem={createNewItem} />
             <ReactPaginate
                 style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}
+                previousLabel="<<"
+                nextLabel=">>"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
                 breakLabel="..."
-                nextLabel="next"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
                 pageCount={pageCount}
-                previousLabel="previous"
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName="pagination justify-content-center"
+                activeClassName="active"
                 renderOnZeroPageCount={null}
             />
         </div>
