@@ -88,7 +88,7 @@ const ItemDetail = ({
                     <>
                     <div style={{display: "flex", justifyContent: "space-between"}}>
                         <h1 className="d-flex inline">{item.name}</h1>
-                        <h4 className="mx-4"> {'price $'}{item.price}</h4>
+                        <h3 className="mx-4">${item.price}</h3>
                     </div>
                         <hr />
                         <div style={{display: 'flex', justifyContent: 'center'}}>
