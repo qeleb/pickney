@@ -63,6 +63,10 @@ const reducer = combineReducers({
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, desc: action.desc } : item;
                 });
+            case mutations.SET_ITEM_PRICE:
+                return items.map(item => {
+                    return (item.id === action.itemID) ? { ...item, price: action.price } : item;
+                });
             case mutations.SET_ITEM_IMG:
                 return items.map(item => {
                     return (item.id === action.itemID) ? { ...item, img: action.img } : item;
@@ -168,6 +172,7 @@ const sagas = [
                     id: itemID,
                     name: "new item",
                     desc: "no description",
+                    price: 0,
                     group: [groupID],
                     inventory: 0,
                     isHidden: false,
@@ -180,14 +185,15 @@ const sagas = [
     },
     function* itemModificationSaga() {
         while (true) {
-            const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_DESC, mutations.SET_ITEM_GROUP,
-                mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
+            const item = yield take([mutations.SET_ITEM_NAME, mutations.SET_ITEM_DESC, mutations.SET_ITEM_PRICE,
+                mutations.SET_ITEM_GROUP, mutations.SET_ITEM_INVENTORY, mutations.SET_ITEM_HIDDEN, mutations.SET_ITEM_DELETED]);
             if (!(yield select(state => state.user.isAdmin))) continue; // Deny Item Modification if Not Admin
             axios.post(`${URL}/item/update`, {
                 item: {
                     id: item.itemID,
                     name: item.name,
                     desc: item.desc,
+                    price: item.price,
                     group: item.groupID,
                     inventory: item.inventory,
                     isHidden: item.isHidden,

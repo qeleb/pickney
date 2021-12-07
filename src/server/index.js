@@ -134,10 +134,11 @@ app.post('/item/update', async (req, res) => {
     if (!(await (await connectDB()).collection('users').findOne({ id: req.body.user_id })).isAdmin)
         return res.status(500).send({ message: "this function requires admin privileges" });
     
-    let { id, name, desc, group, inventory, isHidden, isDeleted } = req.body.item;
+    let { id, name, desc, price, group, inventory, isHidden, isDeleted } = req.body.item;
     let collection_items = (await connectDB()).collection('items');
     if (name) await collection_items.updateOne({ id }, { $set: { name } });
     if (desc) await collection_items.updateOne({ id }, { $set: { desc } });
+    if (price) await collection_items.updateOne({ id }, { $set: { price: parseFloat(price) } });
     if (group) await collection_items.updateOne({ id }, { $addToSet: { group: group } }, { multi:true });
     if (inventory !== undefined) await collection_items.updateOne({ id }, { $set: { inventory } });
     if (isHidden !== undefined) await collection_items.updateOne({ id }, { $set: { isHidden } });

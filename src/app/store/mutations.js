@@ -3,6 +3,7 @@ export const REQUEST_ITEM_CREATE = 'REQUEST_ITEM_CREATE';
 
 export const SET_ITEM_NAME = 'SET_ITEM_NAME';
 export const SET_ITEM_DESC = 'SET_ITEM_DESC';
+export const SET_ITEM_PRICE = 'SET_ITEM_PRICE';
 export const SET_ITEM_IMG = 'SET_ITEM_IMG';
 export const SET_ITEM_GROUP = 'SET_ITEM_GROUP';
 export const SET_ITEM_INVENTORY = 'SET_ITEM_INVENTORY';
@@ -45,6 +46,12 @@ export const setItemDesc = (itemID, desc) => ({
     type: SET_ITEM_DESC,
     itemID,
     desc
+});
+
+export const setItemPrice = (itemID, price) => ({
+    type: SET_ITEM_PRICE,
+    itemID,
+    price
 });
 
 export const setItemImg = (itemID, img) => ({
